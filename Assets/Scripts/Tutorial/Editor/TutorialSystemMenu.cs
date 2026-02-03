@@ -4,7 +4,7 @@ using UnityEditor;
 namespace TutorialSystem.Editor
 {
     /// <summary>
-    /// 教程系统菜单
+    /// Tutorial System Menu
     /// </summary>
     public static class TutorialSystemMenu
     {
@@ -42,7 +42,7 @@ namespace TutorialSystem.Editor
             var existingManager = Object.FindFirstObjectByType<TutorialManager>();
             if (existingManager != null)
             {
-                EditorUtility.DisplayDialog("提示", "场景中已存在 TutorialManager", "确定");
+                EditorUtility.DisplayDialog("Info", "TutorialManager already exists in the scene", "OK");
                 Selection.activeObject = existingManager.gameObject;
                 return;
             }
@@ -76,23 +76,23 @@ namespace TutorialSystem.Editor
             Undo.RegisterCreatedObjectUndo(managerGo, "Quick Setup Tutorial System");
             
             Selection.activeObject = managerGo;
-            EditorUtility.DisplayDialog("完成", 
-                "教程系统快速设置完成！\n\n" +
-                "请创建箭头和弹窗预制体并分配给 TutorialManager。", 
-                "确定");
+            EditorUtility.DisplayDialog("Complete", 
+                "Tutorial System Quick Setup Complete!\n\n" +
+                "Please create Arrow and Popup prefabs and assign them to TutorialManager.", 
+                "OK");
         }
 
         [MenuItem("Window/Tutorial System/Documentation", false, 200)]
         public static void OpenDocumentation()
         {
-            EditorUtility.DisplayDialog("教程系统使用说明",
-                "1. 使用 Quick Setup 快速创建基础结构\n\n" +
-                "2. 在场景中创建 TutorialRunner 组件\n\n" +
-                "3. 在 TutorialRunner 的 Inspector 中配置教程阶段和步骤\n\n" +
-                "4. 为每个步骤添加触发器和模块\n\n" +
-                "5. 可以直接引用场景中的 UI 对象（Button、RectTransform 等）\n\n" +
-                "6. 使用调试窗口 (Window > Tutorial System > Debug Window) 进行调试",
-                "确定");
+            EditorUtility.DisplayDialog("Tutorial System Documentation",
+                "1. Use 'Quick Setup' to create the basic structure\n\n" +
+                "2. Create a 'TutorialRunner' component in the scene\n\n" +
+                "3. Configure phases and steps in the TutorialRunner Inspector\n\n" +
+                "4. Add triggers and modules for each step\n\n" +
+                "5. You can directly reference scene UI objects (Button, RectTransform, etc.)\n\n" +
+                "6. Use the Debug Window (Window > Tutorial System > Debug Window) for debugging",
+                "OK");
         }
     }
 }

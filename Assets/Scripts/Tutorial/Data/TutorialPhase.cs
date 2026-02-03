@@ -15,10 +15,10 @@ namespace TutorialSystem
         public string phaseName;
         public bool enabled = true;
 
-        [Header("步骤列表")]
+        [Header("Step List")]
         public List<TutorialStep> steps = new List<TutorialStep>();
 
-        [Header("事件")]
+        [Header("Events")]
         public TutorialPhaseEvents events = new TutorialPhaseEvents();
 
         /// <summary>
@@ -61,13 +61,13 @@ namespace TutorialSystem
     [Serializable]
     public class TutorialPhaseEvents
     {
-        [Tooltip("进入阶段时触发")]
+        [Tooltip("Triggered when entering phase")]
         public UnityEvent onEnter = new UnityEvent();
         
-        [Tooltip("阶段完成时触发")]
+        [Tooltip("Triggered when phase complete")]
         public UnityEvent onComplete = new UnityEvent();
         
-        [Tooltip("退出阶段时触发")]
+        [Tooltip("Triggered when exiting phase")]
         public UnityEvent onExit = new UnityEvent();
     }
 }

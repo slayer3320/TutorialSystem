@@ -14,11 +14,11 @@ namespace TutorialSystem.Editor
     {
         private static readonly Dictionary<string, Type> TriggerTypes = new Dictionary<string, Type>
         {
-            { "手动触发", typeof(ManualTrigger) },
-            { "计时器触发", typeof(TimerTrigger) },
-            { "按钮点击触发", typeof(ButtonClickTrigger) },
-            { "按键触发", typeof(KeyPressTrigger) },
-            { "游戏事件触发", typeof(GameEventTrigger) }
+            { "Manual Trigger", typeof(ManualTrigger) },
+            { "Timer Trigger", typeof(TimerTrigger) },
+            { "Button Click Trigger", typeof(ButtonClickTrigger) },
+            { "Key Press Trigger", typeof(KeyPressTrigger) },
+            { "Game Event Trigger", typeof(GameEventTrigger) }
         };
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -32,8 +32,8 @@ namespace TutorialSystem.Editor
 
             EditorGUI.LabelField(labelRect, label);
 
-            // 获取当前类型名
-            string currentTypeName = "无";
+            // Get current type name
+            string currentTypeName = "None";
             if (property.managedReferenceValue != null)
             {
                 var currentType = property.managedReferenceValue.GetType();
@@ -91,7 +91,7 @@ namespace TutorialSystem.Editor
         private void ShowTriggerMenu(SerializedProperty property)
         {
             var menu = new GenericMenu();
-            menu.AddItem(new GUIContent("无"), property.managedReferenceValue == null, () =>
+            menu.AddItem(new GUIContent("None"), property.managedReferenceValue == null, () =>
             {
                 property.managedReferenceValue = null;
                 property.serializedObject.ApplyModifiedProperties();
@@ -144,9 +144,9 @@ namespace TutorialSystem.Editor
     {
         private static readonly Dictionary<string, Type> ModuleTypes = new Dictionary<string, Type>
         {
-            { "弹窗模块", typeof(PopupModule) },
-            { "箭头模块", typeof(ArrowModule) },
-            { "高亮模块", typeof(HighlightModule) }
+            { "Popup Module", typeof(PopupModule) },
+            { "Arrow Module", typeof(ArrowModule) },
+            { "Highlight Module", typeof(HighlightModule) }
         };
 
         private bool foldout = true;
@@ -162,8 +162,8 @@ namespace TutorialSystem.Editor
                 position.width - EditorGUIUtility.labelWidth - 25, EditorGUIUtility.singleLineHeight);
             var clearRect = new Rect(position.x + position.width - 20, position.y, 20, EditorGUIUtility.singleLineHeight);
 
-            // 获取当前类型名
-            string currentTypeName = "无";
+            // Get current type name
+            string currentTypeName = "None";
             if (property.managedReferenceValue != null)
             {
                 var module = property.managedReferenceValue as ITutorialModule;
@@ -229,7 +229,7 @@ namespace TutorialSystem.Editor
         private void ShowModuleMenu(SerializedProperty property)
         {
             var menu = new GenericMenu();
-            menu.AddItem(new GUIContent("无"), property.managedReferenceValue == null, () =>
+            menu.AddItem(new GUIContent("None"), property.managedReferenceValue == null, () =>
             {
                 property.managedReferenceValue = null;
                 property.serializedObject.ApplyModifiedProperties();

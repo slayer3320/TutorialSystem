@@ -976,14 +976,14 @@ MonoBehaviour:
     tutorialName: "\u6F14\u793A\u6559\u7A0B"
     localizationTableName: Tutorial
     phases:
-    - phaseId: 6b1ea32c-5991-4b23-b162-e73e33d92b08
+    - phaseId: 213
       phaseName: 
       enabled: 1
       steps:
       - stepId: f209f5a2-0bf6-4cbc-85a5-f1c10fe7c8bc
-        stepName: 
+        stepName: 123
         enabled: 1
-        titleKey:
+        localizedTitle:
           m_TableReference:
             m_TableCollectionName: 
           m_TableEntryReference:
@@ -992,7 +992,8 @@ MonoBehaviour:
           m_FallbackState: 0
           m_WaitForCompletion: 0
           m_LocalVariables: []
-        contentKey:
+        rawTitle: 123
+        localizedContent:
           m_TableReference:
             m_TableCollectionName: 
           m_TableEntryReference:
@@ -1001,6 +1002,7 @@ MonoBehaviour:
           m_FallbackState: 0
           m_WaitForCompletion: 0
           m_LocalVariables: []
+        rawContent: 123
         completeTrigger:
           rid: 7067024205758333119
         modules:
@@ -1053,7 +1055,6 @@ MonoBehaviour:
       type: {class: PopupModule, ns: TutorialSystem, asm: Assembly-CSharp}
       data:
         enabled: 1
-        useLocalizedTitle: 0
         localizedTitle:
           m_TableReference:
             m_TableCollectionName: 
@@ -1064,7 +1065,6 @@ MonoBehaviour:
           m_WaitForCompletion: 0
           m_LocalVariables: []
         rawTitle: 1231
-        useLocalizedContent: 0
         localizedContent:
           m_TableReference:
             m_TableCollectionName: 
@@ -1133,10 +1133,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0588ecc335c7db74aa107c3b0a5dac2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TutorialSystem.TutorialManager
-  arrowPrefab: {fileID: 4639228290515577814, guid: e05c666555207084cacfd29c1ba7695f, type: 3}
-  popupPrefab: {fileID: 647336302576683223, guid: 22019fee6ad6dcc49aa64f4eec3d8119, type: 3}
+  arrowPrefab: {fileID: 1596002136139788, guid: e95abb79253bc7c4e8c59edf2c9108e5, type: 3}
+  popupPrefab: {fileID: 1757758472786602, guid: ad38a0cfb0727094ca8d032ad2e6d967, type: 3}
   uiContainer: {fileID: 693319049}
   targetCanvas: {fileID: 1081843214}
+  useLocalization: 0
   debugMode: 1
 --- !u!4 &1894512284
 Transform:

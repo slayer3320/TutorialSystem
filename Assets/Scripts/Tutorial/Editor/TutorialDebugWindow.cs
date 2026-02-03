@@ -16,7 +16,7 @@ namespace TutorialSystem.Editor
         [MenuItem("Window/Tutorial System/Debug Window")]
         public static void ShowWindow()
         {
-            var window = GetWindow<TutorialDebugWindow>("教程调试");
+            var window = GetWindow<TutorialDebugWindow>("Tutorial Debug");
             window.minSize = new Vector2(400, 500);
         }
 
@@ -53,18 +53,18 @@ namespace TutorialSystem.Editor
         private void DrawHeader()
         {
             EditorGUILayout.BeginVertical("box");
-            GUILayout.Label("教程系统调试窗口", EditorStyles.boldLabel);
+            GUILayout.Label("Tutorial System Debug Window", EditorStyles.boldLabel);
             
             var statusStyle = new GUIStyle(EditorStyles.label);
             if (Application.isPlaying)
             {
                 statusStyle.normal.textColor = Color.green;
-                GUILayout.Label("● 运行中", statusStyle);
+                GUILayout.Label("● Running", statusStyle);
             }
             else
             {
                 statusStyle.normal.textColor = Color.gray;
-                GUILayout.Label("● 编辑模式", statusStyle);
+                GUILayout.Label("● Editor Mode", statusStyle);
             }
             EditorGUILayout.EndVertical();
         }
@@ -72,13 +72,13 @@ namespace TutorialSystem.Editor
         private void DrawRuntimeControls()
         {
             EditorGUILayout.BeginVertical("box");
-            GUILayout.Label("运行时控制", EditorStyles.boldLabel);
+            GUILayout.Label("Runtime Controls", EditorStyles.boldLabel);
             EditorGUILayout.Space(5);
 
             var manager = TutorialManager.Instance;
             if (manager == null)
             {
-                EditorGUILayout.HelpBox("TutorialManager 实例未找到", MessageType.Warning);
+                EditorGUILayout.HelpBox("TutorialManager instance not found", MessageType.Warning);
                 EditorGUILayout.EndVertical();
                 return;
             }
@@ -92,62 +92,62 @@ namespace TutorialSystem.Editor
 
         private void DrawRuntimeStatus(TutorialManager manager)
         {
-            EditorGUILayout.LabelField("当前状态", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("Current Status", EditorStyles.boldLabel);
             
             using (new EditorGUI.IndentLevelScope())
             {
-                EditorGUILayout.LabelField("运行状态", manager.IsRunning ? "运行中" : "已停止");
+                EditorGUILayout.LabelField("Run State", manager.IsRunning ? "Running" : "Stopped");
                 
                 if (manager.IsRunning)
                 {
-                    EditorGUILayout.LabelField("当前教程", manager.CurrentConfig?.tutorialName ?? "无");
-                    EditorGUILayout.LabelField("当前阶段", 
-                        $"{manager.CurrentPhase?.phaseName ?? "无"} ({manager.CurrentPhaseIndex + 1}/{manager.CurrentConfig?.phases.Count ?? 0})");
-                    EditorGUILayout.LabelField("当前步骤", 
-                        $"{manager.CurrentStep?.stepName ?? "无"} ({manager.CurrentStepIndex + 1}/{manager.CurrentPhase?.steps.Count ?? 0})");
+                    EditorGUILayout.LabelField("Current Tutorial", manager.CurrentConfig?.tutorialName ?? "None");
+                    EditorGUILayout.LabelField("Current Phase", 
+                        $"{manager.CurrentPhase?.phaseName ?? "None"} ({manager.CurrentPhaseIndex + 1}/{manager.CurrentConfig?.phases.Count ?? 0})");
+                    EditorGUILayout.LabelField("Current Step", 
+                        $"{manager.CurrentStep?.stepName ?? "None"} ({manager.CurrentStepIndex + 1}/{manager.CurrentPhase?.steps.Count ?? 0})");
                     
                     EditorGUILayout.Space(5);
                     var progress = manager.Progress;
                     var rect = EditorGUILayout.GetControlRect(false, 20);
-                    EditorGUI.ProgressBar(rect, progress, $"总进度: {progress:P0}");
+                    EditorGUI.ProgressBar(rect, progress, $"Total Progress: {progress:P0}");
                 }
             }
         }
 
         private void DrawControlButtons(TutorialManager manager)
         {
-            EditorGUILayout.LabelField("控制", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("Controls", EditorStyles.boldLabel);
 
             EditorGUILayout.BeginHorizontal();
             GUI.enabled = manager.IsRunning;
-            if (GUILayout.Button("上一步", GUILayout.Height(30)))
+            if (GUILayout.Button("Previous Step", GUILayout.Height(30)))
                 manager.PrevStep();
-            if (GUILayout.Button("下一步", GUILayout.Height(30)))
+            if (GUILayout.Button("Next Step", GUILayout.Height(30)))
                 manager.NextStep();
             GUI.enabled = true;
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginHorizontal();
             GUI.enabled = manager.IsRunning;
-            if (GUILayout.Button("下一阶段"))
+            if (GUILayout.Button("Next Phase"))
                 manager.NextPhase();
             GUI.enabled = true;
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginHorizontal();
             GUI.enabled = manager.IsRunning;
-            if (GUILayout.Button("停止教程", GUILayout.Height(25)))
+            if (GUILayout.Button("Stop Tutorial", GUILayout.Height(25)))
                 manager.StopTutorial();
-            if (GUILayout.Button("跳过教程", GUILayout.Height(25)))
+            if (GUILayout.Button("Skip Tutorial", GUILayout.Height(25)))
                 manager.SkipTutorial();
             GUI.enabled = true;
             EditorGUILayout.EndHorizontal();
 
-            // 跳转到阶段
+            // Jump to Phase
             if (manager.IsRunning && manager.CurrentConfig != null)
             {
                 EditorGUILayout.Space(5);
-                EditorGUILayout.LabelField("跳转到阶段:", EditorStyles.miniLabel);
+                EditorGUILayout.LabelField("Jump to Phase:", EditorStyles.miniLabel);
                 
                 for (int i = 0; i < manager.CurrentConfig.phases.Count; i++)
                 {
@@ -158,7 +158,7 @@ namespace TutorialSystem.Editor
                     var style = isCurrent ? EditorStyles.boldLabel : EditorStyles.label;
                     EditorGUILayout.LabelField($"{i + 1}. {phase.phaseName}", style);
                     
-                    if (GUILayout.Button("跳转", GUILayout.Width(50)))
+                    if (GUILayout.Button("Jump", GUILayout.Width(50)))
                         manager.JumpToPhase(i);
                     
                     EditorGUILayout.EndHorizontal();
@@ -169,8 +169,8 @@ namespace TutorialSystem.Editor
         private void DrawEditorInfo()
         {
             EditorGUILayout.BeginVertical("box");
-            GUILayout.Label("编辑模式", EditorStyles.boldLabel);
-            EditorGUILayout.HelpBox("在 Play 模式下可使用调试功能", MessageType.Info);
+            GUILayout.Label("Editor Mode", EditorStyles.boldLabel);
+            EditorGUILayout.HelpBox("Debug features are available in Play Mode", MessageType.Info);
             EditorGUILayout.EndVertical();
         }
 

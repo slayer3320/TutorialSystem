@@ -18,6 +18,11 @@ namespace TutorialSystem
         [SerializeField] private Transform uiContainer;
         [SerializeField] private Canvas targetCanvas;
 
+        [Header("本地化")]
+        [SerializeField]
+        [Tooltip("启用本地化支持，关闭后将使用原始文本")]
+        private bool useLocalization = false;
+
         [Header("调试")]
         [SerializeField] private bool debugMode = false;
 
@@ -33,6 +38,7 @@ namespace TutorialSystem
         public int CurrentPhaseIndex => currentContext?.PhaseIndex ?? -1;
         public int CurrentStepIndex => currentContext?.StepIndex ?? -1;
         public float Progress => currentContext?.Progress ?? 0f;
+        public bool UseLocalization => useLocalization;
 
         private void Awake()
         {

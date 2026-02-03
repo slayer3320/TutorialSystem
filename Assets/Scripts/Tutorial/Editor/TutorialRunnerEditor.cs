@@ -21,15 +21,15 @@ namespace TutorialSystem.Editor
 
             var runner = target as TutorialRunner;
 
-            // 教程配置
-            EditorGUILayout.PropertyField(configProp, new GUIContent("教程配置"), true);
+            // Tutorial Configuration
+            EditorGUILayout.PropertyField(configProp, new GUIContent("Tutorial Config"), true);
 
             EditorGUILayout.Space(10);
-            EditorGUILayout.PropertyField(autoStartOnEnableProp, new GUIContent("启用时自动开始"));
+            EditorGUILayout.PropertyField(autoStartOnEnableProp, new GUIContent("Auto Start On Enable"));
 
             EditorGUILayout.Space(10);
 
-            // 运行控制
+            // Runtime Controls
             DrawRuntimeControls(runner);
 
             serializedObject.ApplyModifiedProperties();
@@ -40,7 +40,7 @@ namespace TutorialSystem.Editor
 
         private void DrawRuntimeControls(TutorialRunner runner)
         {
-            EditorGUILayout.LabelField("运行控制", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("Runtime Controls", EditorStyles.boldLabel);
             EditorGUILayout.BeginVertical("box");
 
             var phases = configProp.FindPropertyRelative("phases");
@@ -48,17 +48,17 @@ namespace TutorialSystem.Editor
 
             if (!hasConfig)
             {
-                EditorGUILayout.HelpBox("请配置教程内容", MessageType.Warning);
+                EditorGUILayout.HelpBox("Please configure tutorial content", MessageType.Warning);
             }
             else if (!Application.isPlaying)
             {
-                EditorGUILayout.HelpBox("在 Play 模式下可以控制教程", MessageType.Info);
+                EditorGUILayout.HelpBox("Tutorial controls are available in Play Mode", MessageType.Info);
             }
             else
             {
                 if (!runner.IsRunning)
                 {
-                    if (GUILayout.Button("开始教程", GUILayout.Height(30)))
+                    if (GUILayout.Button("Start Tutorial", GUILayout.Height(30)))
                         runner.StartTutorial();
                 }
                 else
@@ -66,24 +66,24 @@ namespace TutorialSystem.Editor
                     var manager = TutorialManager.Instance;
                     if (manager != null)
                     {
-                        EditorGUILayout.LabelField("当前阶段", manager.CurrentPhase?.phaseName ?? "无");
-                        EditorGUILayout.LabelField("当前步骤", manager.CurrentStep?.stepName ?? "无");
-                        EditorGUILayout.LabelField("进度", $"{manager.Progress * 100:F0}%");
+                        EditorGUILayout.LabelField("Current Phase", manager.CurrentPhase?.phaseName ?? "None");
+                        EditorGUILayout.LabelField("Current Step", manager.CurrentStep?.stepName ?? "None");
+                        EditorGUILayout.LabelField("Progress", $"{manager.Progress * 100:F0}%");
                     }
 
                     EditorGUILayout.Space(5);
 
                     EditorGUILayout.BeginHorizontal();
-                    if (GUILayout.Button("停止"))
+                    if (GUILayout.Button("Stop"))
                         runner.StopTutorial();
-                    if (GUILayout.Button("跳过"))
+                    if (GUILayout.Button("Skip"))
                         runner.SkipTutorial();
                     EditorGUILayout.EndHorizontal();
 
                     EditorGUILayout.BeginHorizontal();
-                    if (GUILayout.Button("上一步"))
+                    if (GUILayout.Button("Previous Step"))
                         runner.PrevStep();
-                    if (GUILayout.Button("下一步"))
+                    if (GUILayout.Button("Next Step"))
                         runner.NextStep();
                     EditorGUILayout.EndHorizontal();
                 }

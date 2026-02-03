@@ -31,27 +31,19 @@ namespace TutorialSystem
 
         [Header("内容设置")]
         [SerializeField]
-        [Tooltip("使用本地化标题")]
-        private bool useLocalizedTitle = true;
-        
-        [SerializeField]
-        [Tooltip("本地化标题")]
+        [Tooltip("本地化标题（启用本地化时使用）")]
         private LocalizedString localizedTitle;
         
         [SerializeField]
-        [Tooltip("非本地化标题（当 useLocalizedTitle 为 false 时使用）")]
+        [Tooltip("原始标题（未启用本地化时使用）")]
         private string rawTitle;
         
         [SerializeField]
-        [Tooltip("使用本地化内容")]
-        private bool useLocalizedContent = true;
-        
-        [SerializeField]
-        [Tooltip("本地化内容")]
+        [Tooltip("本地化内容（启用本地化时使用）")]
         private LocalizedString localizedContent;
         
         [SerializeField]
-        [Tooltip("非本地化内容（当 useLocalizedContent 为 false 时使用）")]
+        [Tooltip("原始内容（未启用本地化时使用）")]
         [TextArea(3, 5)]
         private string rawContent;
 
@@ -85,20 +77,29 @@ namespace TutorialSystem
 
         public event Action OnButtonClicked;
 
+        // 运行时强制使用原始文本的标记
+        private bool forceRawText = false;
+
         protected override void OnActivate()
         {
             popupUI = TutorialUIPool.GetPopup();
             if (popupUI != null)
             {
-                string title = useLocalizedTitle && !localizedTitle.IsEmpty 
+                bool useLocalization = !forceRawText && 
+                    TutorialManager.Instance != null && 
+                    TutorialManager.Instance.UseLocalization;
+
+                string title = useLocalization && !localizedTitle.IsEmpty 
                     ? localizedTitle.GetLocalizedString() 
                     : rawTitle;
                     
-                string content = useLocalizedContent && !localizedContent.IsEmpty 
+                string content = useLocalization && !localizedContent.IsEmpty 
                     ? localizedContent.GetLocalizedString() 
                     : rawContent;
                 
-                string btnText = !buttonText.IsEmpty ? buttonText.GetLocalizedString() : "OK";
+                string btnText = useLocalization && !buttonText.IsEmpty 
+                    ? buttonText.GetLocalizedString() 
+                    : "OK";
 
                 popupUI.Setup(title, content, showButton, btnText, position, customPosition, offset, width);
                 popupUI.OnButtonClick += HandleButtonClick;
@@ -122,10 +123,10 @@ namespace TutorialSystem
             OnButtonClicked?.Invoke();
         }
 
+        // 代码动态设置内容时使用
         public void SetContent(string title, string content)
         {
-            useLocalizedTitle = false;
-            useLocalizedContent = false;
+            forceRawText = true;
             rawTitle = title;
             rawContent = content;
         }

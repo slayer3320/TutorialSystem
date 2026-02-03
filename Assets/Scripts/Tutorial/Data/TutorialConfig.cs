@@ -11,20 +11,20 @@ namespace TutorialSystem
     [Serializable]
     public class TutorialConfig
     {
-        [Header("基本信息")]
+        [Header("Basic Info")]
         public string tutorialId;
         public string tutorialName;
 
-        [Header("本地化")]
+        [Header("Localization")]
         public string localizationTableName = "Tutorial";
 
-        [Header("阶段列表")]
+        [Header("Phase List")]
         public List<TutorialPhase> phases = new List<TutorialPhase>();
 
-        [Header("事件")]
+        [Header("Events")]
         public TutorialConfigEvents events = new TutorialConfigEvents();
 
-        [Header("设置")]
+        [Header("Settings")]
         public bool saveProgressOnComplete = true;
         public bool canSkip = false;
 
