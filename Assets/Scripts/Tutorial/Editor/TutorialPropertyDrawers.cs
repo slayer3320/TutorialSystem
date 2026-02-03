@@ -72,10 +72,13 @@ namespace TutorialSystem.Editor
             {
                 height += 2;
                 var iterator = property.Copy();
+                var endProperty = property.GetEndProperty();
                 if (iterator.NextVisible(true))
                 {
                     do
                     {
+                        if (SerializedProperty.EqualContents(iterator, endProperty))
+                            break;
                         height += EditorGUI.GetPropertyHeight(iterator, true) + 2;
                     }
                     while (iterator.NextVisible(false));
@@ -113,12 +116,16 @@ namespace TutorialSystem.Editor
         private void DrawChildProperties(Rect position, SerializedProperty property)
         {
             var iterator = property.Copy();
+            var endProperty = property.GetEndProperty();
             float yOffset = 0;
 
             if (iterator.NextVisible(true))
             {
                 do
                 {
+                    if (SerializedProperty.EqualContents(iterator, endProperty))
+                        break;
+                    
                     var propHeight = EditorGUI.GetPropertyHeight(iterator, true);
                     var propRect = new Rect(position.x, position.y + yOffset, position.width, propHeight);
                     EditorGUI.PropertyField(propRect, iterator, true);
@@ -203,10 +210,13 @@ namespace TutorialSystem.Editor
             {
                 height += 2;
                 var iterator = property.Copy();
+                var endProperty = property.GetEndProperty();
                 if (iterator.NextVisible(true))
                 {
                     do
                     {
+                        if (SerializedProperty.EqualContents(iterator, endProperty))
+                            break;
                         height += EditorGUI.GetPropertyHeight(iterator, true) + 2;
                     }
                     while (iterator.NextVisible(false));
@@ -244,12 +254,16 @@ namespace TutorialSystem.Editor
         private void DrawChildProperties(Rect position, SerializedProperty property)
         {
             var iterator = property.Copy();
+            var endProperty = property.GetEndProperty();
             float yOffset = 0;
 
             if (iterator.NextVisible(true))
             {
                 do
                 {
+                    if (SerializedProperty.EqualContents(iterator, endProperty))
+                        break;
+                    
                     var propHeight = EditorGUI.GetPropertyHeight(iterator, true);
                     var propRect = new Rect(position.x, position.y + yOffset, position.width, propHeight);
                     EditorGUI.PropertyField(propRect, iterator, true);

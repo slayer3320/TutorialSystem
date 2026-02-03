@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace TutorialSystem
 {
@@ -92,7 +93,16 @@ namespace TutorialSystem
 
         public TutorialBuilder WithTimerTrigger(float delay)
         {
-            return WithTrigger(new TimerTrigger());
+            var trigger = new TimerTrigger();
+            trigger.SetDelay(delay);
+            return WithTrigger(trigger);
+        }
+
+        public TutorialBuilder WithButtonClickTrigger(Button button)
+        {
+            var trigger = new ButtonClickTrigger();
+            trigger.SetTargetButton(button);
+            return WithTrigger(trigger);
         }
 
         public TutorialBuilder WithManualTrigger()

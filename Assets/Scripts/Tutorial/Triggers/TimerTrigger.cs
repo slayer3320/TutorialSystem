@@ -17,6 +17,11 @@ namespace TutorialSystem
 
         private float elapsedTime;
 
+        public void SetDelay(float delaySeconds)
+        {
+            delay = delaySeconds;
+        }
+
         public override void Enable()
         {
             base.Enable();
