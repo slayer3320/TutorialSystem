@@ -32,13 +32,7 @@ namespace TutorialSystem
     {
         public override string ModuleName => "高亮";
 
-        [SerializeField]
-        [Tooltip("目标 UI 元素")]
-        private RectTransform targetUI;
-
-        [SerializeField]
-        [Tooltip("目标路径（运行时查找）")]
-        private string targetPath;
+        #region Highlight Properties
 
         [SerializeField]
         [Tooltip("边距")]
@@ -63,10 +57,6 @@ namespace TutorialSystem
         private float cornerRadius = 10f;
 
         [SerializeField]
-        [Tooltip("脉冲效果")]
-        private PulseEffect pulseEffect = new PulseEffect();
-
-        [SerializeField]
         [Tooltip("阻挡非高亮区域点击")]
         private bool blockRaycasts = true;
 
@@ -74,19 +64,16 @@ namespace TutorialSystem
         [Tooltip("点击遮罩进入下一步")]
         private bool clickMaskToNext = false;
 
-        private TutorialHighlightUI highlightUI;
-        private RectTransform resolvedTarget;
+        #endregion
 
-        public void SetTarget(RectTransform target)
-        {
-            targetUI = target;
-            resolvedTarget = target;
-        }
+        private TutorialHighlightUI highlightUI;
 
         protected override void OnActivate()
         {
-            ResolveTarget();
-            if (resolvedTarget == null)
+            // 使用基类的target属性
+            RectTransform targetRect = target as RectTransform;
+            
+            if (targetRect == null && positionMode == ModulePositionMode.TransformBased)
             {
                 Debug.LogWarning("[HighlightModule] No target found!");
                 return;
@@ -95,22 +82,24 @@ namespace TutorialSystem
             highlightUI = TutorialUIPool.GetHighlight();
             if (highlightUI != null)
             {
-                var canvas = context?.TargetCanvas;
+                var canvas = targetCanvas;
+                if (canvas == null)
+                    canvas = context?.TargetCanvas;
                 if (canvas == null)
                     canvas = UnityEngine.Object.FindFirstObjectByType<Canvas>();
 
                 highlightUI.transform.SetParent(canvas?.transform, false);
-                highlightUI.Setup(resolvedTarget, highlightType, shape,
+                highlightUI.Setup(targetRect, highlightType, shape,
                     maskColor, highlightColor, padding, cornerRadius,
                     blockRaycasts, clickMaskToNext, canvas);
 
                 if (clickMaskToNext)
                     highlightUI.OnMaskClicked += HandleMaskClick;
 
-                // 注册Effect到边框元素
+                // 初始化并播放所有配置的Effect
                 if (highlightUI.BorderRect != null)
                 {
-                    RegisterEffect(pulseEffect, highlightUI.BorderRect);
+                    InitializeAndPlayEffects(highlightUI.BorderRect);
                 }
 
                 highlightUI.Show();
@@ -119,8 +108,6 @@ namespace TutorialSystem
 
         protected override void OnDeactivate()
         {
-            ClearEffects();
-            
             if (highlightUI != null)
             {
                 if (clickMaskToNext)
@@ -134,25 +121,9 @@ namespace TutorialSystem
         public override void UpdateModule()
         {
             base.UpdateModule();
-            
+
             if (isActive && highlightUI != null)
                 highlightUI.UpdateHighlight();
-        }
-
-        private void ResolveTarget()
-        {
-            if (targetUI != null)
-            {
-                resolvedTarget = targetUI;
-                return;
-            }
-
-            if (!string.IsNullOrEmpty(targetPath))
-            {
-                var go = GameObject.Find(targetPath);
-                if (go != null)
-                    resolvedTarget = go.GetComponent<RectTransform>();
-            }
         }
 
         private void HandleMaskClick()
@@ -161,4 +132,3 @@ namespace TutorialSystem
         }
     }
 }
-

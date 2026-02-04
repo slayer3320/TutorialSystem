@@ -12,6 +12,10 @@ namespace TutorialSystem
     {
         [SerializeField] private RectTransform rectTransform;
         [SerializeField] private CanvasGroup canvasGroup;
+        
+        // 暴露CanvasGroup供Effect使用
+        public CanvasGroup CanvasGroup => canvasGroup;
+
         [SerializeField] private TextMeshProUGUI titleText;
         [SerializeField] private TextMeshProUGUI contentText;
         [SerializeField] private Button confirmButton;

@@ -1029,6 +1029,59 @@ MonoBehaviour:
         onExit:
           m_PersistentCalls:
             m_Calls: []
+    - phaseId: 213
+      phaseName: 
+      enabled: 1
+      steps:
+      - stepId: c48b8a95-13ff-467a-8629-47a5cb85071b
+        stepName: 
+        enabled: 0
+        localizedTitle:
+          m_TableReference:
+            m_TableCollectionName: 
+          m_TableEntryReference:
+            m_KeyId: 0
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+        rawTitle: 
+        localizedContent:
+          m_TableReference:
+            m_TableCollectionName: 
+          m_TableEntryReference:
+            m_KeyId: 0
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+        rawContent: 
+        completeTrigger:
+          rid: -2
+        modules:
+        - rid: 7067024218802880587
+        events:
+          onEnter:
+            m_PersistentCalls:
+              m_Calls: []
+          onComplete:
+            m_PersistentCalls:
+              m_Calls: []
+          onExit:
+            m_PersistentCalls:
+              m_Calls: []
+        pauseOnEnter: 0
+        resumeOnExit: 0
+      events:
+        onEnter:
+          m_PersistentCalls:
+            m_Calls: []
+        onComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        onExit:
+          m_PersistentCalls:
+            m_Calls: []
     events:
       onStart:
         m_PersistentCalls:
@@ -1045,6 +1098,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 7067024205758333119
       type: {class: KeyPressTrigger, ns: TutorialSystem, asm: Assembly-CSharp}
       data:
@@ -1055,6 +1110,9 @@ MonoBehaviour:
       type: {class: PopupModule, ns: TutorialSystem, asm: Assembly-CSharp}
       data:
         enabled: 1
+        serializedEffects:
+        - rid: 7067024218802880599
+        - rid: 7067024218802880598
         localizedTitle:
           m_TableReference:
             m_TableCollectionName: 
@@ -1089,6 +1147,34 @@ MonoBehaviour:
         customPosition: {x: 0, y: 0}
         offset: {x: 0, y: 0}
         width: 0
+    - rid: 7067024218802880587
+      type: {class: ArrowModule, ns: TutorialSystem, asm: Assembly-CSharp}
+      data:
+        enabled: 1
+        serializedEffects: []
+        positionMode: 0
+        targetUI: {fileID: 0}
+        targetPath: 
+        worldTarget: {fileID: 0}
+        fixedPosition: {x: 0, y: 0}
+        offset: {x: 0, y: 0}
+        direction: 1
+        color: {r: 1, g: 1, b: 1, a: 1}
+        scale: 1
+    - rid: 7067024218802880598
+      type: {class: FadeInEffect, ns: TutorialSystem, asm: Assembly-CSharp}
+      data:
+        enabled: 1
+        duration: 0.3
+        startAlpha: 0
+        endAlpha: 1
+    - rid: 7067024218802880599
+      type: {class: FadeInEffect, ns: TutorialSystem, asm: Assembly-CSharp}
+      data:
+        enabled: 1
+        duration: 0.3
+        startAlpha: 0
+        endAlpha: 1
 --- !u!4 &1869012287
 Transform:
   m_ObjectHideFlags: 0

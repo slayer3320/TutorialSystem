@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 namespace TutorialSystem
 {
@@ -15,13 +14,7 @@ namespace TutorialSystem
         [SerializeField] private CanvasGroup canvasGroup;
 
         private ArrowModule module;
-        private RectTransform targetUI;
-        private Transform worldTarget;
-        private PositionMode positionMode;
         private ArrowDirection direction;
-        private Vector2 offset;
-        private Vector2 fixedPosition;
-        private Camera mainCamera;
 
         // 暴露RectTransform供Effect使用
         public RectTransform RectTransform => rectTransform;
@@ -34,21 +27,12 @@ namespace TutorialSystem
                 canvasGroup = GetComponent<CanvasGroup>();
             if (arrowImage == null)
                 arrowImage = GetComponent<Image>();
-                
-            mainCamera = Camera.main;
         }
 
-        public void Setup(ArrowModule module, RectTransform targetUI, Transform worldTarget,
-            PositionMode positionMode, ArrowDirection direction, Vector2 offset, Color color, 
-            float scale, Vector2 fixedPosition)
+        public void Setup(ArrowModule module, ArrowDirection direction, Color color, float scale)
         {
             this.module = module;
-            this.targetUI = targetUI;
-            this.worldTarget = worldTarget;
-            this.positionMode = positionMode;
             this.direction = direction;
-            this.offset = offset;
-            this.fixedPosition = fixedPosition;
 
             if (arrowImage != null)
             {
@@ -80,54 +64,11 @@ namespace TutorialSystem
 
         public void UpdatePosition()
         {
-            Vector2 targetPos = CalculateTargetPosition();
-            rectTransform.anchoredPosition = targetPos + offset;
-        }
-
-        private Vector2 CalculateTargetPosition()
-        {
-            switch (positionMode)
+            if (module != null)
             {
-                case PositionMode.FollowTarget:
-                    if (targetUI != null)
-                    {
-                        return GetUIPosition(targetUI);
-                    }
-                    break;
-
-                case PositionMode.WorldPosition:
-                    if (worldTarget != null && mainCamera != null)
-                    {
-                        Vector3 screenPos = mainCamera.WorldToScreenPoint(worldTarget.position);
-                        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                            rectTransform.parent as RectTransform,
-                            screenPos,
-                            null,
-                            out Vector2 localPos);
-                        return localPos;
-                    }
-                    break;
-
-                case PositionMode.Fixed:
-                    return fixedPosition;
+                // 直接使用 Module 计算的位置
+                rectTransform.anchoredPosition = module.GetTargetPosition(rectTransform);
             }
-
-            return Vector2.zero;
-        }
-
-        private Vector2 GetUIPosition(RectTransform target)
-        {
-            Vector3[] corners = new Vector3[4];
-            target.GetWorldCorners(corners);
-            Vector3 center = (corners[0] + corners[2]) / 2f;
-            
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                rectTransform.parent as RectTransform,
-                RectTransformUtility.WorldToScreenPoint(null, center),
-                null,
-                out Vector2 localPos);
-                
-            return localPos;
         }
 
         private void ApplyRotation()
@@ -149,4 +90,3 @@ namespace TutorialSystem
         }
     }
 }
-

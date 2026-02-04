@@ -1,13 +1,11 @@
 #if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
-using UnityEngine.Localization;
 
 namespace TutorialSystem.Editor
 {
     /// <summary>
-    /// PopupModule Custom Drawer
-    /// Displays different inputs based on TutorialManager's global localization settings
+    /// PopupModule专属Drawer
     /// </summary>
     [CustomPropertyDrawer(typeof(PopupModule))]
     public class PopupModuleDrawer : PropertyDrawer
@@ -29,18 +27,46 @@ namespace TutorialSystem.Editor
                 EditorGUI.indentLevel++;
                 float yOffset = EditorGUIUtility.singleLineHeight + 2;
 
+                // Base Properties
+                yOffset = DrawHeader(position, yOffset, "Base Properties");
+                yOffset = DrawPropertyField(position, property, "updateEveryFrame", "Update Every Frame", yOffset);
+                yOffset = DrawPropertyField(position, property, "targetCanvas", "Target Canvas", yOffset);
+                yOffset = DrawPropertyField(position, property, "positionMode", "Position Mode", yOffset);
+
+                var positionModeProp = property.FindPropertyRelative("positionMode");
+                if (positionModeProp != null && (ModulePositionMode)positionModeProp.enumValueIndex == ModulePositionMode.TransformBased)
+                {
+                    yOffset = DrawPropertyField(position, property, "targetType", "Target Type", yOffset);
+                    yOffset = DrawPropertyField(position, property, "target", "Target", yOffset);
+                    yOffset = DrawPropertyField(position, property, "placementType", "Placement Type", yOffset);
+                    yOffset = DrawPropertyField(position, property, "constrainToCanvas", "Constrain To Canvas", yOffset);
+                }
+                else
+                {
+                    yOffset = DrawPropertyField(position, property, "manualPosition", "Manual Position", yOffset);
+                }
+                yOffset = DrawPropertyField(position, property, "positionOffset", "Position Offset", yOffset);
+
+                // Module Properties
+                yOffset = DrawHeader(position, yOffset, "Module Properties");
+                yOffset = DrawPropertyField(position, property, "sizeType", "Size Type", yOffset);
+                
+                var sizeTypeProp = property.FindPropertyRelative("sizeType");
+                if (sizeTypeProp != null && (ModuleSizeType)sizeTypeProp.enumValueIndex == ModuleSizeType.CustomSize)
+                {
+                    yOffset = DrawPropertyField(position, property, "customSize", "Custom Size", yOffset);
+                }
+
                 // Content Settings
                 yOffset = DrawHeader(position, yOffset, "Content Settings");
 
                 if (useLocalization)
                 {
-                    // Localization mode: show LocalizedString fields
                     yOffset = DrawPropertyField(position, property, "localizedTitle", "Title", yOffset);
                     yOffset = DrawPropertyField(position, property, "localizedContent", "Content", yOffset);
                 }
                 else
                 {
-                    // Non-localization mode: show regular string fields
                     yOffset = DrawPropertyField(position, property, "rawTitle", "Title", yOffset);
                     yOffset = DrawPropertyField(position, property, "rawContent", "Content", yOffset);
                 }
@@ -53,20 +79,9 @@ namespace TutorialSystem.Editor
                     yOffset = DrawPropertyField(position, property, "buttonText", "Button Text", yOffset);
                 }
 
-                // Position Settings
-                yOffset = DrawHeader(position, yOffset, "Position Settings");
-                yOffset = DrawPropertyField(position, property, "position", "Position", yOffset);
-                
-                var positionProp = property.FindPropertyRelative("position");
-                if (positionProp != null && (PopupPosition)positionProp.enumValueIndex == PopupPosition.Custom)
-                {
-                    yOffset = DrawPropertyField(position, property, "customPosition", "Custom Position", yOffset);
-                }
-                yOffset = DrawPropertyField(position, property, "offset", "Offset", yOffset);
-
-                // Appearance Settings
-                yOffset = DrawHeader(position, yOffset, "Appearance Settings");
-                yOffset = DrawPropertyField(position, property, "width", "Width", yOffset);
+                // Effects
+                yOffset = DrawHeader(position, yOffset, "Effects");
+                yOffset = DrawPropertyField(position, property, "serializedEffects", "Effects", yOffset);
 
                 EditorGUI.indentLevel--;
             }
@@ -80,11 +95,40 @@ namespace TutorialSystem.Editor
                 return EditorGUIUtility.singleLineHeight;
 
             bool useLocalization = GetGlobalLocalizationSetting();
-            float height = EditorGUIUtility.singleLineHeight + 2; // Header
+            float height = EditorGUIUtility.singleLineHeight + 2;
 
-            // 内容设置 header
+            // Base Properties header
             height += EditorGUIUtility.singleLineHeight + 4;
+            height += GetPropertyHeight(property, "updateEveryFrame");
+            height += GetPropertyHeight(property, "targetCanvas");
+            height += GetPropertyHeight(property, "positionMode");
 
+            var positionModeProp = property.FindPropertyRelative("positionMode");
+            if (positionModeProp != null && (ModulePositionMode)positionModeProp.enumValueIndex == ModulePositionMode.TransformBased)
+            {
+                height += GetPropertyHeight(property, "targetType");
+                height += GetPropertyHeight(property, "target");
+                height += GetPropertyHeight(property, "placementType");
+                height += GetPropertyHeight(property, "constrainToCanvas");
+            }
+            else
+            {
+                height += GetPropertyHeight(property, "manualPosition");
+            }
+            height += GetPropertyHeight(property, "positionOffset");
+
+            // Module Properties header
+            height += EditorGUIUtility.singleLineHeight + 4;
+            height += GetPropertyHeight(property, "sizeType");
+            
+            var sizeTypeProp = property.FindPropertyRelative("sizeType");
+            if (sizeTypeProp != null && (ModuleSizeType)sizeTypeProp.enumValueIndex == ModuleSizeType.CustomSize)
+            {
+                height += GetPropertyHeight(property, "customSize");
+            }
+
+            // Content Settings header
+            height += EditorGUIUtility.singleLineHeight + 4;
             if (useLocalization)
             {
                 height += GetPropertyHeight(property, "localizedTitle");
@@ -96,7 +140,7 @@ namespace TutorialSystem.Editor
                 height += GetPropertyHeight(property, "rawContent");
             }
 
-            // 按钮设置 header + fields
+            // Button Settings header
             height += EditorGUIUtility.singleLineHeight + 4;
             height += GetPropertyHeight(property, "showButton");
             if (useLocalization)
@@ -104,27 +148,15 @@ namespace TutorialSystem.Editor
                 height += GetPropertyHeight(property, "buttonText");
             }
 
-            // 位置设置 header + fields
+            // Effects header
             height += EditorGUIUtility.singleLineHeight + 4;
-            height += GetPropertyHeight(property, "position");
-            
-            var positionProp = property.FindPropertyRelative("position");
-            if (positionProp != null && (PopupPosition)positionProp.enumValueIndex == PopupPosition.Custom)
-            {
-                height += GetPropertyHeight(property, "customPosition");
-            }
-            height += GetPropertyHeight(property, "offset");
-
-            // 外观设置 header + fields
-            height += EditorGUIUtility.singleLineHeight + 4;
-            height += GetPropertyHeight(property, "width");
+            height += GetPropertyHeight(property, "serializedEffects");
 
             return height;
         }
 
         private bool GetGlobalLocalizationSetting()
         {
-            // 在编辑器中查找 TutorialManager
             var manager = Object.FindFirstObjectByType<TutorialManager>();
             if (manager != null)
             {
