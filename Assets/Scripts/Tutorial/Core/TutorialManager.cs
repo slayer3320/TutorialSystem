@@ -349,34 +349,12 @@ namespace TutorialSystem
 
                 config.events.onComplete?.Invoke();
                 TutorialEventChannel.RaiseTutorialComplete(config);
-
-                if (config.saveProgressOnComplete)
-                    SaveProgress(config.tutorialId);
             }
 
             isRunning = false;
             currentContext?.Reset();
             currentContext = null;
             currentConfig = null;
-        }
-
-        private void SaveProgress(string tutorialId)
-        {
-            string key = $"Tutorial_Completed_{tutorialId}";
-            PlayerPrefs.SetInt(key, 1);
-            PlayerPrefs.Save();
-            Log($"Progress saved: {tutorialId}");
-        }
-
-        public static bool IsTutorialCompleted(string tutorialId)
-        {
-            return PlayerPrefs.GetInt($"Tutorial_Completed_{tutorialId}", 0) == 1;
-        }
-
-        public static void ResetTutorialProgress(string tutorialId)
-        {
-            PlayerPrefs.DeleteKey($"Tutorial_Completed_{tutorialId}");
-            PlayerPrefs.Save();
         }
 
         private void Log(string message)

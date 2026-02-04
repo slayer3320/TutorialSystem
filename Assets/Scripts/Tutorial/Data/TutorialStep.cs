@@ -12,7 +12,6 @@ namespace TutorialSystem
     [Serializable]
     public class TutorialStep
     {
-        public string stepId;
         public string stepName;
         public bool enabled = true;
 

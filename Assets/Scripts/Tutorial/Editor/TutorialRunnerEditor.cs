@@ -63,15 +63,12 @@ namespace TutorialSystem.Editor
                 var tutorialIdProp = configProp.FindPropertyRelative("tutorialId");
                 var tutorialNameProp = configProp.FindPropertyRelative("tutorialName");
                 var locTableProp = configProp.FindPropertyRelative("localizationTableName");
-                var saveProgressProp = configProp.FindPropertyRelative("saveProgressOnComplete");
                 var canSkipProp = configProp.FindPropertyRelative("canSkip");
 
-                EditorGUILayout.PropertyField(tutorialIdProp, new GUIContent("Tutorial ID"));
                 EditorGUILayout.PropertyField(tutorialNameProp, new GUIContent("Tutorial Name"));
                 EditorGUILayout.PropertyField(locTableProp, new GUIContent("Localization Table"));
 
                 EditorGUILayout.Space(2);
-                EditorGUILayout.PropertyField(saveProgressProp, new GUIContent("Save Progress"));
                 EditorGUILayout.PropertyField(canSkipProp, new GUIContent("Can Skip"));
                 EditorGUILayout.PropertyField(autoStartOnEnableProp, new GUIContent("Auto Start On Enable"));
 
@@ -255,7 +252,6 @@ namespace TutorialSystem.Editor
             // Basic Info
             EditorGUILayout.LabelField("Basic Info", EditorStyles.miniBoldLabel);
             EditorGUILayout.PropertyField(stepProp.FindPropertyRelative("stepName"), new GUIContent("Name"));
-            EditorGUILayout.PropertyField(stepProp.FindPropertyRelative("stepId"), new GUIContent("ID"));
             EditorGUILayout.PropertyField(stepProp.FindPropertyRelative("enabled"), new GUIContent("Enabled"));
 
             EditorGUILayout.Space(4);

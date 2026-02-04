@@ -17,8 +17,7 @@ namespace TutorialSystem
         {
             config = new TutorialConfig
             {
-                tutorialName = tutorialName,
-                tutorialId = Guid.NewGuid().ToString()
+                tutorialName = tutorialName
             };
         }
 
@@ -26,7 +25,6 @@ namespace TutorialSystem
         {
             currentPhase = new TutorialPhase
             {
-                phaseId = Guid.NewGuid().ToString(),
                 phaseName = phaseName,
                 enabled = true
             };
@@ -40,7 +38,6 @@ namespace TutorialSystem
 
             currentStep = new TutorialStep
             {
-                stepId = Guid.NewGuid().ToString(),
                 stepName = stepName,
                 enabled = true
             };
@@ -118,12 +115,6 @@ namespace TutorialSystem
         public TutorialBuilder CanSkip(bool canSkip = true)
         {
             config.canSkip = canSkip;
-            return this;
-        }
-
-        public TutorialBuilder SaveOnComplete(bool save = true)
-        {
-            config.saveProgressOnComplete = save;
             return this;
         }
 

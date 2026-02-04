@@ -11,7 +11,6 @@ namespace TutorialSystem
     [Serializable]
     public class TutorialPhase
     {
-        public string phaseId;
         public string phaseName;
         public bool enabled = true;
 

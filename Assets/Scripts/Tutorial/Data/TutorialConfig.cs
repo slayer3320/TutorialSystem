@@ -11,7 +11,6 @@ namespace TutorialSystem
     [Serializable]
     public class TutorialConfig
     {
-        public string tutorialId;
         public string tutorialName;
 
         public string localizationTableName = "Tutorial";
@@ -21,7 +20,6 @@ namespace TutorialSystem
         [NonSerialized]
         public TutorialConfigEvents events = new TutorialConfigEvents();
 
-        public bool saveProgressOnComplete = true;
         public bool canSkip = false;
 
         public int GetFirstEnabledPhaseIndex()
@@ -56,26 +54,6 @@ namespace TutorialSystem
             }
             return count;
         }
-
-#if UNITY_EDITOR
-        public void GenerateIds()
-        {
-            if (string.IsNullOrEmpty(tutorialId))
-                tutorialId = Guid.NewGuid().ToString();
-
-            foreach (var phase in phases)
-            {
-                if (string.IsNullOrEmpty(phase.phaseId))
-                    phase.phaseId = Guid.NewGuid().ToString();
-
-                foreach (var step in phase.steps)
-                {
-                    if (string.IsNullOrEmpty(step.stepId))
-                        step.stepId = Guid.NewGuid().ToString();
-                }
-            }
-        }
-#endif
     }
 
     public class TutorialConfigEvents

@@ -155,11 +155,6 @@ namespace TutorialSystem
 
         #endregion
 
-#if UNITY_EDITOR
-        private void OnValidate()
-        {
-            config?.GenerateIds();
-        }
-#endif
+        // No validation needed for now
     }
 }
