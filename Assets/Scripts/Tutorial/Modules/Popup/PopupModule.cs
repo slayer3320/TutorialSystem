@@ -75,14 +75,25 @@ namespace TutorialSystem
                     ? buttonText.GetLocalizedString()
                     : "OK";
 
-                // 转换位置模式
-                PopupPosition popupPosition = ConvertToPopupPosition();
-                Vector2 customPos = positionMode == ModulePositionMode.Manual 
-                    ? manualPosition 
-                    : Vector2.zero;
+                // 计算位置
+                PopupPosition popupPosition;
+                Vector2 customPos;
+                
+                if (positionMode == ModulePositionMode.TransformBased)
+                {
+                    // Transform Based 模式：使用基类的位置计算
+                    popupPosition = PopupPosition.Custom;
+                    customPos = CalculatePosition(popupUI.GetComponent<RectTransform>());
+                }
+                else
+                {
+                    // Manual 模式：直接使用手动位置
+                    popupPosition = PopupPosition.Custom;
+                    customPos = manualPosition + positionOffset;
+                }
 
                 popupUI.Setup(title, content, showButton, btnText, popupPosition, 
-                    customPos, positionOffset, sizeType == ModuleSizeType.CustomSize ? customSize.x : 0);
+                    customPos, Vector2.zero, sizeType == ModuleSizeType.CustomSize ? customSize.x : 0);
                 popupUI.OnButtonClick += HandleButtonClick;
 
                 // 初始化并播放所有配置的Effect
