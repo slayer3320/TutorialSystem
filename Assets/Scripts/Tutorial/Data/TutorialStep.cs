@@ -39,6 +39,7 @@ namespace TutorialSystem
         public List<ITutorialModule> modules = new List<ITutorialModule>();
 
 
+        [NonSerialized]
         public TutorialStepEvents events = new TutorialStepEvents();
 
 
@@ -71,7 +72,6 @@ namespace TutorialSystem
         }
     }
 
-    [Serializable]
     public class TutorialStepEvents
     {
         [Tooltip("Triggered when entering step")]

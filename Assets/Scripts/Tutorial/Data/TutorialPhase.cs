@@ -17,6 +17,7 @@ namespace TutorialSystem
 
         public List<TutorialStep> steps = new List<TutorialStep>();
 
+        [NonSerialized]
         public TutorialPhaseEvents events = new TutorialPhaseEvents();
 
         /// <summary>
@@ -56,7 +57,6 @@ namespace TutorialSystem
         }
     }
 
-    [Serializable]
     public class TutorialPhaseEvents
     {
         [Tooltip("Triggered when entering phase")]

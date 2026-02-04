@@ -65,7 +65,6 @@ namespace TutorialSystem.Editor
                 var locTableProp = configProp.FindPropertyRelative("localizationTableName");
                 var saveProgressProp = configProp.FindPropertyRelative("saveProgressOnComplete");
                 var canSkipProp = configProp.FindPropertyRelative("canSkip");
-                var eventsProp = configProp.FindPropertyRelative("events");
 
                 EditorGUILayout.PropertyField(tutorialIdProp, new GUIContent("Tutorial ID"));
                 EditorGUILayout.PropertyField(tutorialNameProp, new GUIContent("Tutorial Name"));
@@ -75,9 +74,6 @@ namespace TutorialSystem.Editor
                 EditorGUILayout.PropertyField(saveProgressProp, new GUIContent("Save Progress"));
                 EditorGUILayout.PropertyField(canSkipProp, new GUIContent("Can Skip"));
                 EditorGUILayout.PropertyField(autoStartOnEnableProp, new GUIContent("Auto Start On Enable"));
-
-                EditorGUILayout.Space(4);
-                EditorGUILayout.PropertyField(eventsProp, new GUIContent("Events"), true);
 
                 EditorGUI.indentLevel--;
             }
@@ -114,7 +110,6 @@ namespace TutorialSystem.Editor
             var phaseNameProp = phaseProp.FindPropertyRelative("phaseName");
             var phaseEnabledProp = phaseProp.FindPropertyRelative("enabled");
             var stepsProp = phaseProp.FindPropertyRelative("steps");
-            var eventsProp = phaseProp.FindPropertyRelative("events");
 
             string phaseName = string.IsNullOrEmpty(phaseNameProp.stringValue) ? "Unnamed Phase" : phaseNameProp.stringValue;
             string phaseKey = $"phase_{phaseIndex}";
@@ -164,11 +159,6 @@ namespace TutorialSystem.Editor
 
                     // Steps
                     DrawStepsSection(stepsProp, phaseIndex);
-
-                    EditorGUILayout.Space(4);
-
-                    // Events
-                    EditorGUILayout.PropertyField(eventsProp, new GUIContent("Phase Events"), true);
 
                     EditorGUI.indentLevel--;
                 }
@@ -301,12 +291,6 @@ namespace TutorialSystem.Editor
             EditorGUILayout.LabelField("Settings", EditorStyles.miniBoldLabel);
             EditorGUILayout.PropertyField(stepProp.FindPropertyRelative("pauseOnEnter"), new GUIContent("Pause On Enter"));
             EditorGUILayout.PropertyField(stepProp.FindPropertyRelative("resumeOnExit"), new GUIContent("Resume On Exit"));
-
-            EditorGUILayout.Space(4);
-
-            // Events
-            EditorGUILayout.LabelField("Events", EditorStyles.miniBoldLabel);
-            EditorGUILayout.PropertyField(stepProp.FindPropertyRelative("events"), new GUIContent("Step Events"), true);
         }
 
         private void DrawRuntimeControls(TutorialRunner runner)

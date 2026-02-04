@@ -1183,7 +1183,6 @@ MonoBehaviour:
         completeTrigger:
           rid: 7067024205758333119
         modules:
-        - rid: 7067024220487417947
         - rid: 7067024220487417937
         events:
           onEnter:
@@ -1324,52 +1323,6 @@ MonoBehaviour:
       data:
         enabled: 1
         updateEveryFrame: 0
-        targetCanvas: {fileID: 0}
-        positionMode: 0
-        targetType: 0
-        target: {fileID: 0}
-        placementType: 0
-        constrainToCanvas: 0
-        positionOffset: {x: 0, y: 0}
-        manualPosition: {x: 0, y: 0}
-        sizeType: 0
-        customSize: {x: 200, y: 100}
-        serializedEffects: []
-        localizedTitle:
-          m_TableReference:
-            m_TableCollectionName: 
-          m_TableEntryReference:
-            m_KeyId: 0
-            m_Key: 
-          m_FallbackState: 0
-          m_WaitForCompletion: 0
-          m_LocalVariables: []
-        rawTitle: 
-        localizedContent:
-          m_TableReference:
-            m_TableCollectionName: 
-          m_TableEntryReference:
-            m_KeyId: 0
-            m_Key: 
-          m_FallbackState: 0
-          m_WaitForCompletion: 0
-          m_LocalVariables: []
-        rawContent: 
-        showButton: 1
-        buttonText:
-          m_TableReference:
-            m_TableCollectionName: 
-          m_TableEntryReference:
-            m_KeyId: 0
-            m_Key: 
-          m_FallbackState: 0
-          m_WaitForCompletion: 0
-          m_LocalVariables: []
-    - rid: 7067024220487417947
-      type: {class: ArrowModule, ns: TutorialSystem, asm: Assembly-CSharp}
-      data:
-        enabled: 1
-        updateEveryFrame: 0
         targetCanvas: {fileID: 815075517}
         positionMode: 0
         targetType: 0
@@ -1381,19 +1334,46 @@ MonoBehaviour:
         sizeType: 0
         customSize: {x: 200, y: 100}
         serializedEffects:
-        - rid: 7067024220487417948
-        - rid: 7067024220487417950
-        direction: 1
-        color: {r: 1, g: 1, b: 1, a: 1}
-        scale: 1
-    - rid: 7067024220487417948
+        - rid: 7067024220487417952
+        - rid: 7067024220487417953
+        localizedTitle:
+          m_TableReference:
+            m_TableCollectionName: 
+          m_TableEntryReference:
+            m_KeyId: 0
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+        rawTitle: 123
+        localizedContent:
+          m_TableReference:
+            m_TableCollectionName: 
+          m_TableEntryReference:
+            m_KeyId: 0
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+        rawContent: 123
+        showButton: 1
+        buttonText:
+          m_TableReference:
+            m_TableCollectionName: 
+          m_TableEntryReference:
+            m_KeyId: 0
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+    - rid: 7067024220487417952
       type: {class: FloatingEffect, ns: TutorialSystem, asm: Assembly-CSharp}
       data:
         enabled: 1
         amplitude: 10
         speed: 2
         direction: {x: 0, y: 1}
-    - rid: 7067024220487417950
+    - rid: 7067024220487417953
       type: {class: FadeInEffect, ns: TutorialSystem, asm: Assembly-CSharp}
       data:
         enabled: 1

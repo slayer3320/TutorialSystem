@@ -18,6 +18,7 @@ namespace TutorialSystem
 
         public List<TutorialPhase> phases = new List<TutorialPhase>();
 
+        [NonSerialized]
         public TutorialConfigEvents events = new TutorialConfigEvents();
 
         public bool saveProgressOnComplete = true;
@@ -77,7 +78,6 @@ namespace TutorialSystem
 #endif
     }
 
-    [Serializable]
     public class TutorialConfigEvents
     {
         public UnityEvent onStart = new UnityEvent();
