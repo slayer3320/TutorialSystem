@@ -22,24 +22,21 @@ namespace TutorialSystem
 
         public bool canSkip = false;
 
-        public int GetFirstEnabledPhaseIndex()
+        public int GetFirstPhaseIndex()
         {
-            for (int i = 0; i < phases.Count; i++)
-                if (phases[i].enabled) return i;
+            if (phases.Count > 0) return 0;
             return -1;
         }
 
-        public int GetNextEnabledPhaseIndex(int currentIndex)
+        public int GetNextPhaseIndex(int currentIndex)
         {
-            for (int i = currentIndex + 1; i < phases.Count; i++)
-                if (phases[i].enabled) return i;
+            if (currentIndex + 1 < phases.Count) return currentIndex + 1;
             return -1;
         }
 
-        public int GetPrevEnabledPhaseIndex(int currentIndex)
+        public int GetPrevPhaseIndex(int currentIndex)
         {
-            for (int i = currentIndex - 1; i >= 0; i--)
-                if (phases[i].enabled) return i;
+            if (currentIndex - 1 >= 0) return currentIndex - 1;
             return -1;
         }
 
@@ -48,9 +45,7 @@ namespace TutorialSystem
             int count = 0;
             foreach (var phase in phases)
             {
-                if (!phase.enabled) continue;
-                foreach (var step in phase.steps)
-                    if (step.enabled) count++;
+                count += phase.steps.Count;
             }
             return count;
         }

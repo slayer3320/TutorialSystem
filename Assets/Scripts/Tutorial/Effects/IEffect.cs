@@ -8,11 +8,6 @@ namespace TutorialSystem
     public interface IEffect
     {
         /// <summary>
-        /// 是否启用
-        /// </summary>
-        bool Enabled { get; set; }
-
-        /// <summary>
         /// 是否正在播放
         /// </summary>
         bool IsPlaying { get; }

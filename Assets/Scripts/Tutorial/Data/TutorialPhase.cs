@@ -12,7 +12,6 @@ namespace TutorialSystem
     public class TutorialPhase
     {
         public string phaseName;
-        public bool enabled = true;
 
         public List<TutorialStep> steps = new List<TutorialStep>();
 
@@ -20,38 +19,29 @@ namespace TutorialSystem
         public TutorialPhaseEvents events = new TutorialPhaseEvents();
 
         /// <summary>
-        /// 获取第一个启用的步骤索引
+        /// 获取第一个步骤索引
         /// </summary>
-        public int GetFirstEnabledStepIndex()
+        public int GetFirstStepIndex()
         {
-            for (int i = 0; i < steps.Count; i++)
-            {
-                if (steps[i].enabled) return i;
-            }
+            if (steps.Count > 0) return 0;
             return -1;
         }
 
         /// <summary>
-        /// 获取下一个启用的步骤索引
+        /// 获取下一个步骤索引
         /// </summary>
-        public int GetNextEnabledStepIndex(int currentIndex)
+        public int GetNextStepIndex(int currentIndex)
         {
-            for (int i = currentIndex + 1; i < steps.Count; i++)
-            {
-                if (steps[i].enabled) return i;
-            }
+            if (currentIndex + 1 < steps.Count) return currentIndex + 1;
             return -1;
         }
 
         /// <summary>
-        /// 获取上一个启用的步骤索引
+        /// 获取上一个步骤索引
         /// </summary>
-        public int GetPrevEnabledStepIndex(int currentIndex)
+        public int GetPrevStepIndex(int currentIndex)
         {
-            for (int i = currentIndex - 1; i >= 0; i--)
-            {
-                if (steps[i].enabled) return i;
-            }
+            if (currentIndex - 1 >= 0) return currentIndex - 1;
             return -1;
         }
     }

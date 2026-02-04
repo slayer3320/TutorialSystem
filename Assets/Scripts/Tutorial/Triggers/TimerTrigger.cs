@@ -36,7 +36,7 @@ namespace TutorialSystem
 
         public override void Update()
         {
-            if (!isEnabled || isTriggered) return;
+            if (isTriggered) return;
             
             elapsedTime += Time.deltaTime;
             if (elapsedTime >= delay)

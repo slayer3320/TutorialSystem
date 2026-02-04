@@ -13,7 +13,6 @@ namespace TutorialSystem
     public class TutorialStep
     {
         public string stepName;
-        public bool enabled = true;
 
 
         [Tooltip("Localized Title (Used when localization is enabled)")]

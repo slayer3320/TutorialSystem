@@ -9,14 +9,6 @@ namespace TutorialSystem
     [Serializable]
     public abstract class EffectBase : IEffect
     {
-        [SerializeField]
-        protected bool enabled = true;
-        public bool Enabled
-        {
-            get => enabled;
-            set => enabled = value;
-        }
-
         protected bool isPlaying;
         public bool IsPlaying => isPlaying;
 
@@ -30,7 +22,7 @@ namespace TutorialSystem
 
         public virtual void Play()
         {
-            if (!enabled || target == null) return;
+            if (target == null) return;
             isPlaying = true;
             OnPlay();
         }
@@ -43,7 +35,7 @@ namespace TutorialSystem
 
         public virtual void Update()
         {
-            if (!enabled || !isPlaying || target == null) return;
+            if (!isPlaying || target == null) return;
             OnUpdate();
         }
 

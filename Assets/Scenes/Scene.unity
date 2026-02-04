@@ -1180,7 +1180,7 @@ MonoBehaviour:
         completeTrigger:
           rid: 7067024205758333119
         modules:
-        - rid: 7067024220487417937
+        - rid: 7067024224276447304
         pauseOnEnter: 0
         resumeOnExit: 0
     - phaseName: 
@@ -1262,8 +1262,8 @@ MonoBehaviour:
         duration: 0.3
         startAlpha: 0
         endAlpha: 1
-    - rid: 7067024220487417937
-      type: {class: PopupModule, ns: TutorialSystem, asm: Assembly-CSharp}
+    - rid: 7067024224276447304
+      type: {class: ArrowModule, ns: TutorialSystem, asm: Assembly-CSharp}
       data:
         enabled: 1
         updateEveryFrame: 0
@@ -1271,59 +1271,24 @@ MonoBehaviour:
         positionMode: 0
         targetType: 0
         target: {fileID: 603416382}
-        placementType: 0
+        placementType: 1
         constrainToCanvas: 0
-        positionOffset: {x: 0, y: 0}
+        positionOffset: {x: 0, y: -50}
         manualPosition: {x: 0, y: 0}
         sizeType: 0
         customSize: {x: 200, y: 100}
         serializedEffects:
-        - rid: 7067024220487417952
-        - rid: 7067024220487417953
-        localizedTitle:
-          m_TableReference:
-            m_TableCollectionName: 
-          m_TableEntryReference:
-            m_KeyId: 0
-            m_Key: 
-          m_FallbackState: 0
-          m_WaitForCompletion: 0
-          m_LocalVariables: []
-        rawTitle: 123
-        localizedContent:
-          m_TableReference:
-            m_TableCollectionName: 
-          m_TableEntryReference:
-            m_KeyId: 0
-            m_Key: 
-          m_FallbackState: 0
-          m_WaitForCompletion: 0
-          m_LocalVariables: []
-        rawContent: 123
-        showButton: 1
-        buttonText:
-          m_TableReference:
-            m_TableCollectionName: 
-          m_TableEntryReference:
-            m_KeyId: 0
-            m_Key: 
-          m_FallbackState: 0
-          m_WaitForCompletion: 0
-          m_LocalVariables: []
-    - rid: 7067024220487417952
+        - rid: 7067024224276447305
+        direction: 0
+        color: {r: 0, g: 0, b: 0, a: 1}
+        scale: 1
+    - rid: 7067024224276447305
       type: {class: FloatingEffect, ns: TutorialSystem, asm: Assembly-CSharp}
       data:
         enabled: 1
         amplitude: 10
         speed: 2
         direction: {x: 0, y: 1}
-    - rid: 7067024220487417953
-      type: {class: FadeInEffect, ns: TutorialSystem, asm: Assembly-CSharp}
-      data:
-        enabled: 1
-        duration: 0.3
-        startAlpha: 0
-        endAlpha: 1
 --- !u!4 &1869012287
 Transform:
   m_ObjectHideFlags: 0

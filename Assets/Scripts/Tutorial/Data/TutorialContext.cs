@@ -29,11 +29,9 @@ namespace TutorialSystem
                 for (int i = 0; i < phases.Count; i++)
                 {
                     var phase = phases[i];
-                    if (!phase.enabled) continue;
                     
                     for (int j = 0; j < phase.steps.Count; j++)
                     {
-                        if (!phase.steps[j].enabled) continue;
                         totalSteps++;
                         
                         if (i < PhaseIndex || (i == PhaseIndex && j < StepIndex))

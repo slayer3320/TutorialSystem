@@ -18,11 +18,6 @@ namespace TutorialSystem
         bool IsTriggered { get; }
         
         /// <summary>
-        /// 是否启用
-        /// </summary>
-        bool IsEnabled { get; }
-
-        /// <summary>
         /// 初始化触发器
         /// </summary>
         void Initialize(TutorialContext context);

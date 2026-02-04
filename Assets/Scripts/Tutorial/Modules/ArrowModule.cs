@@ -92,12 +92,25 @@ namespace TutorialSystem
 
         public override void UpdateModule()
         {
-            base.UpdateModule();
-
             if (arrowUI != null && isActive)
             {
-                arrowUI.UpdatePosition();
+                // 先计算目标位置
+                Vector2 targetPos = GetTargetPosition(arrowUI.RectTransform);
+                
+                // 更新Effect的基础位置（如果有FloatingEffect）
+                foreach (var effect in runtimeEffects)
+                {
+                    if (effect is FloatingEffect floatingEffect)
+                    {
+                        floatingEffect.UpdateBasePosition(targetPos);
+                    }
+                }
+
+                // 应用位置
+                arrowUI.RectTransform.anchoredPosition = targetPos;
             }
+
+            base.UpdateModule();
         }
 
         /// <summary>

@@ -70,9 +70,6 @@ namespace TutorialSystem
         #region Base Properties
         
         [SerializeField]
-        protected bool enabled = true;
-
-        [SerializeField]
         [Tooltip("是否每帧更新位置")]
         protected bool updateEveryFrame = false;
 
@@ -137,7 +134,7 @@ namespace TutorialSystem
         protected TutorialContext context;
 
         // 运行时Effect列表
-        private List<IEffect> runtimeEffects = new List<IEffect>();
+        protected List<IEffect> runtimeEffects = new List<IEffect>();
 
         // 已添加的Effect类型集合（防止重复）
         private HashSet<Type> effectTypes = new HashSet<Type>();
@@ -194,7 +191,6 @@ namespace TutorialSystem
 
         public virtual void Activate()
         {
-            if (!enabled) return;
             isActive = true;
             OnActivate();
         }
@@ -214,7 +210,7 @@ namespace TutorialSystem
             // 更新所有Effect
             foreach (var effect in runtimeEffects)
             {
-                if (effect != null && effect.Enabled)
+                if (effect != null)
                     effect.Update();
             }
         }
@@ -271,7 +267,7 @@ namespace TutorialSystem
             runtimeEffects.Clear();
             foreach (var effect in serializedEffects)
             {
-                if (effect != null && effect.Enabled)
+                if (effect != null)
                 {
                     effect.Initialize(target);
                     effect.Play();

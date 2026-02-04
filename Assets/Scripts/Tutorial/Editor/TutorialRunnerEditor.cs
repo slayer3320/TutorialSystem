@@ -105,7 +105,6 @@ namespace TutorialSystem.Editor
         {
             var phaseProp = phasesProp.GetArrayElementAtIndex(phaseIndex);
             var phaseNameProp = phaseProp.FindPropertyRelative("phaseName");
-            var phaseEnabledProp = phaseProp.FindPropertyRelative("enabled");
             var stepsProp = phaseProp.FindPropertyRelative("steps");
 
             string phaseName = string.IsNullOrEmpty(phaseNameProp.stringValue) ? "Unnamed Phase" : phaseNameProp.stringValue;
@@ -113,9 +112,7 @@ namespace TutorialSystem.Editor
             if (!phaseFoldouts.ContainsKey(phaseKey))
                 phaseFoldouts[phaseKey] = false;
 
-            bool isEnabled = phaseEnabledProp.boolValue;
             int stepCount = stepsProp.arraySize;
-            int enabledCount = CountEnabledSteps(stepsProp);
 
             // Phase header
             EditorGUILayout.BeginVertical("box");
@@ -123,9 +120,7 @@ namespace TutorialSystem.Editor
                 EditorGUILayout.BeginHorizontal();
 
                 // Foldout with phase info
-                string displayName = isEnabled 
-                    ? $"Phase {phaseIndex + 1}: {phaseName}  [{enabledCount}/{stepCount} Steps]"
-                    : $"Phase {phaseIndex + 1}: {phaseName}  [Disabled]";
+                string displayName = $"Phase {phaseIndex + 1}: {phaseName}  [{stepCount} Steps]";
 
                 phaseFoldouts[phaseKey] = EditorGUILayout.Foldout(phaseFoldouts[phaseKey], displayName, true);
 
@@ -150,7 +145,6 @@ namespace TutorialSystem.Editor
                     EditorGUI.indentLevel++;
 
                     EditorGUILayout.PropertyField(phaseNameProp, new GUIContent("Phase Name"));
-                    EditorGUILayout.PropertyField(phaseEnabledProp, new GUIContent("Enabled"));
 
                     EditorGUILayout.Space(4);
 
@@ -185,7 +179,6 @@ namespace TutorialSystem.Editor
         {
             var stepProp = stepsProp.GetArrayElementAtIndex(stepIndex);
             var stepNameProp = stepProp.FindPropertyRelative("stepName");
-            var stepEnabledProp = stepProp.FindPropertyRelative("enabled");
             var triggerProp = stepProp.FindPropertyRelative("completeTrigger");
             var modulesProp = stepProp.FindPropertyRelative("modules");
 
@@ -194,7 +187,6 @@ namespace TutorialSystem.Editor
             if (!stepFoldouts.ContainsKey(stepKey))
                 stepFoldouts[stepKey] = false;
 
-            bool isEnabled = stepEnabledProp.boolValue;
             string triggerType = GetTriggerTypeName(triggerProp);
             int moduleCount = modulesProp.arraySize;
 
@@ -204,9 +196,7 @@ namespace TutorialSystem.Editor
                 EditorGUILayout.BeginHorizontal();
 
                 // Foldout with step info
-                string displayName = isEnabled 
-                    ? $"Step {stepIndex + 1}: {stepName}  [{triggerType}] [{moduleCount} Modules]"
-                    : $"Step {stepIndex + 1}: {stepName}  [Disabled]";
+                string displayName = $"Step {stepIndex + 1}: {stepName}  [{triggerType}] [{moduleCount} Modules]";
 
                 stepFoldouts[stepKey] = EditorGUILayout.Foldout(stepFoldouts[stepKey], displayName, true);
 
@@ -252,7 +242,6 @@ namespace TutorialSystem.Editor
             // Basic Info
             EditorGUILayout.LabelField("Basic Info", EditorStyles.miniBoldLabel);
             EditorGUILayout.PropertyField(stepProp.FindPropertyRelative("stepName"), new GUIContent("Name"));
-            EditorGUILayout.PropertyField(stepProp.FindPropertyRelative("enabled"), new GUIContent("Enabled"));
 
             EditorGUILayout.Space(4);
 
@@ -504,18 +493,6 @@ namespace TutorialSystem.Editor
 
             var typeName = triggerProp.managedReferenceValue.GetType().Name;
             return typeName.Replace("Trigger", "");
-        }
-
-        private int CountEnabledSteps(SerializedProperty stepsProp)
-        {
-            int count = 0;
-            for (int i = 0; i < stepsProp.arraySize; i++)
-            {
-                var enabledProp = stepsProp.GetArrayElementAtIndex(i).FindPropertyRelative("enabled");
-                if (enabledProp != null && enabledProp.boolValue)
-                    count++;
-            }
-            return count;
         }
 
         private bool GetGlobalLocalizationSetting()

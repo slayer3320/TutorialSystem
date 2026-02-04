@@ -11,10 +11,6 @@ namespace TutorialSystem
     {
         public abstract string TriggerName { get; }
         
-        [SerializeField]
-        protected bool isEnabled;
-        public bool IsEnabled => isEnabled;
-        
         protected bool isTriggered;
         public bool IsTriggered => isTriggered;
         
@@ -30,13 +26,11 @@ namespace TutorialSystem
 
         public virtual void Enable()
         {
-            isEnabled = true;
             isTriggered = false;
         }
 
         public virtual void Disable()
         {
-            isEnabled = false;
         }
 
         public virtual void Reset()
@@ -48,7 +42,7 @@ namespace TutorialSystem
 
         protected void Trigger()
         {
-            if (!isEnabled || isTriggered) return;
+            if (isTriggered) return;
             isTriggered = true;
             OnTriggered?.Invoke();
         }

@@ -26,7 +26,6 @@ namespace TutorialSystem
             currentPhase = new TutorialPhase
             {
                 phaseName = phaseName,
-                enabled = true
             };
             config.phases.Add(currentPhase);
             return this;
@@ -39,7 +38,6 @@ namespace TutorialSystem
             currentStep = new TutorialStep
             {
                 stepName = stepName,
-                enabled = true
             };
             currentPhase.steps.Add(currentStep);
             return this;

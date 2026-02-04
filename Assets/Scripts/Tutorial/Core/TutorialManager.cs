@@ -95,12 +95,12 @@ namespace TutorialSystem
             config.events.onStart?.Invoke();
             TutorialEventChannel.RaiseTutorialStart(config);
 
-            int firstPhaseIndex = config.GetFirstEnabledPhaseIndex();
+            int firstPhaseIndex = config.GetFirstPhaseIndex();
             if (firstPhaseIndex >= 0)
                 EnterPhase(firstPhaseIndex);
             else
             {
-                Debug.LogWarning("[TutorialManager] No enabled phases!");
+                Debug.LogWarning("[TutorialManager] No phases found!");
                 CompleteTutorial();
             }
         }
@@ -148,7 +148,7 @@ namespace TutorialSystem
             var phase = currentContext.CurrentPhase;
             if (phase == null) return;
 
-            int nextStepIndex = phase.GetNextEnabledStepIndex(currentContext.StepIndex);
+            int nextStepIndex = phase.GetNextStepIndex(currentContext.StepIndex);
             if (nextStepIndex >= 0)
             {
                 ExitCurrentStep();
@@ -165,7 +165,7 @@ namespace TutorialSystem
             var phase = currentContext.CurrentPhase;
             if (phase == null) return;
 
-            int prevStepIndex = phase.GetPrevEnabledStepIndex(currentContext.StepIndex);
+            int prevStepIndex = phase.GetPrevStepIndex(currentContext.StepIndex);
             if (prevStepIndex >= 0)
             {
                 ExitCurrentStep();
@@ -177,7 +177,7 @@ namespace TutorialSystem
         {
             if (!isRunning || currentContext == null) return;
 
-            int nextPhaseIndex = currentConfig?.GetNextEnabledPhaseIndex(currentContext.PhaseIndex) ?? -1;
+            int nextPhaseIndex = currentConfig?.GetNextPhaseIndex(currentContext.PhaseIndex) ?? -1;
             
             if (nextPhaseIndex >= 0)
             {
@@ -233,7 +233,7 @@ namespace TutorialSystem
             phase.events.onEnter?.Invoke();
             TutorialEventChannel.RaisePhaseEnter(phase);
 
-            int firstStepIndex = phase.GetFirstEnabledStepIndex();
+            int firstStepIndex = phase.GetFirstStepIndex();
             if (firstStepIndex >= 0)
                 EnterStep(firstStepIndex);
             else

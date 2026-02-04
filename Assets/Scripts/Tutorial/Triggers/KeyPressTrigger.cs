@@ -21,7 +21,7 @@ namespace TutorialSystem
 
         public override void Update()
         {
-            if (!isEnabled || isTriggered) return;
+            if (isTriggered) return;
 
             if (anyKey)
             {
