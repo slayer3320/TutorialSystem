@@ -142,19 +142,5 @@ namespace TutorialSystem
         }
 
         #endregion
-
-        #region 静态工厂方法
-
-        /// <summary>
-        /// 创建教程构建器
-        /// </summary>
-        public static TutorialBuilder CreateBuilder(string tutorialName)
-        {
-            return new TutorialBuilder(tutorialName);
-        }
-
-        #endregion
-
-        // No validation needed for now
     }
 }
