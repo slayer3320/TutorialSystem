@@ -419,19 +419,7 @@ namespace TutorialSystem.Editor
 
         private void DrawModuleProperties(SerializedProperty moduleProp)
         {
-            var iterator = moduleProp.Copy();
-            var endProperty = moduleProp.GetEndProperty();
-
-            if (iterator.NextVisible(true))
-            {
-                do
-                {
-                    if (SerializedProperty.EqualContents(iterator, endProperty))
-                        break;
-                    EditorGUILayout.PropertyField(iterator, true);
-                }
-                while (iterator.NextVisible(false));
-            }
+            EditorGUILayout.PropertyField(moduleProp, GUIContent.none, true);
         }
 
         private void DrawModuleAddRemoveButtons(SerializedProperty modulesProp)

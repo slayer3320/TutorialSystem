@@ -1149,16 +1149,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TutorialSystem.TutorialRunner
   config:
-    tutorialId: demo_tutorial
     tutorialName: "\u6F14\u793A\u6559\u7A0B"
     localizationTableName: Tutorial
     phases:
-    - phaseId: 213
-      phaseName: 123
+    - phaseName: 123
       enabled: 1
       steps:
-      - stepId: f209f5a2-0bf6-4cbc-85a5-f1c10fe7c8bc
-        stepName: 123
+      - stepName: 123
         enabled: 1
         localizedTitle:
           m_TableReference:
@@ -1184,34 +1181,12 @@ MonoBehaviour:
           rid: 7067024205758333119
         modules:
         - rid: 7067024220487417937
-        events:
-          onEnter:
-            m_PersistentCalls:
-              m_Calls: []
-          onComplete:
-            m_PersistentCalls:
-              m_Calls: []
-          onExit:
-            m_PersistentCalls:
-              m_Calls: []
         pauseOnEnter: 0
         resumeOnExit: 0
-      events:
-        onEnter:
-          m_PersistentCalls:
-            m_Calls: []
-        onComplete:
-          m_PersistentCalls:
-            m_Calls: []
-        onExit:
-          m_PersistentCalls:
-            m_Calls: []
-    - phaseId: 213
-      phaseName: 
+    - phaseName: 
       enabled: 1
       steps:
-      - stepId: c48b8a95-13ff-467a-8629-47a5cb85071b
-        stepName: 
+      - stepName: 
         enabled: 0
         localizedTitle:
           m_TableReference:
@@ -1237,39 +1212,8 @@ MonoBehaviour:
           rid: -2
         modules:
         - rid: 7067024218802880587
-        events:
-          onEnter:
-            m_PersistentCalls:
-              m_Calls: []
-          onComplete:
-            m_PersistentCalls:
-              m_Calls: []
-          onExit:
-            m_PersistentCalls:
-              m_Calls: []
         pauseOnEnter: 0
         resumeOnExit: 0
-      events:
-        onEnter:
-          m_PersistentCalls:
-            m_Calls: []
-        onComplete:
-          m_PersistentCalls:
-            m_Calls: []
-        onExit:
-          m_PersistentCalls:
-            m_Calls: []
-    events:
-      onStart:
-        m_PersistentCalls:
-          m_Calls: []
-      onComplete:
-        m_PersistentCalls:
-          m_Calls: []
-      onSkip:
-        m_PersistentCalls:
-          m_Calls: []
-    saveProgressOnComplete: 1
     canSkip: 1
   autoStartOnEnable: 1
   references:
