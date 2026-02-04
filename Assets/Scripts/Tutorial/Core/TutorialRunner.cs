@@ -10,10 +10,8 @@ namespace TutorialSystem
     /// </summary>
     public class TutorialRunner : MonoBehaviour
     {
-        [Header("教程配置")]
         [SerializeField] private TutorialConfig config = new TutorialConfig();
 
-        [Header("运行设置")]
         [SerializeField] private bool autoStartOnEnable = false;
 
         public TutorialConfig Config => config;

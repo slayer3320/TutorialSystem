@@ -7,10 +7,8 @@ namespace TutorialSystem.Setup
     /// </summary>
     public class CodeTutorialDemo : MonoBehaviour
     {
-        [Header("目标 UI")]
         [SerializeField] private RectTransform targetButton;
 
-        [Header("设置")]
         [SerializeField] private float startDelay = 0.5f;
 
         private void Start()

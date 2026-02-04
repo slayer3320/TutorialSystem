@@ -1088,7 +1088,7 @@ MonoBehaviour:
         position: 0
         customPosition: {x: 0, y: 0}
         offset: {x: 0, y: 0}
-        width: 3.31
+        width: 0
 --- !u!4 &1869012287
 Transform:
   m_ObjectHideFlags: 0

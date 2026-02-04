@@ -45,7 +45,6 @@ namespace TutorialSystem
     {
         public override string ModuleName => "箭头";
 
-        [Header("位置设置")]
         [SerializeField]
         private PositionMode positionMode = PositionMode.FollowTarget;
         
@@ -69,30 +68,19 @@ namespace TutorialSystem
         [Tooltip("位置偏移")]
         private Vector2 offset;
 
-        [Header("外观设置")]
         [SerializeField]
         private ArrowDirection direction = ArrowDirection.Down;
         
         [SerializeField]
-        [Tooltip("箭头颜色")]
         private Color color = Color.white;
         
         [SerializeField]
         [Tooltip("箭头大小缩放")]
         private float scale = 1f;
 
-        [Header("动画设置")]
         [SerializeField]
-        [Tooltip("是否启用浮动动画")]
-        private bool enableFloatAnimation = true;
-        
-        [SerializeField]
-        [Tooltip("浮动幅度")]
-        private float floatAmplitude = 10f;
-        
-        [SerializeField]
-        [Tooltip("浮动速度")]
-        private float floatSpeed = 2f;
+        [Tooltip("浮动效果")]
+        private FloatingEffect floatingEffect = new FloatingEffect();
 
         private TutorialArrowUI arrowUI;
         private RectTransform resolvedTarget;
@@ -116,14 +104,23 @@ namespace TutorialSystem
             arrowUI = TutorialUIPool.GetArrow();
             if (arrowUI != null)
             {
+                // 设置浮动方向
+                floatingEffect.Direction = GetFloatDirection();
+                
                 arrowUI.Setup(this, resolvedTarget, worldTarget, positionMode, direction, 
-                    offset, color, scale, enableFloatAnimation, floatAmplitude, floatSpeed, fixedPosition);
+                    offset, color, scale, fixedPosition);
+                
+                // 注册Effect
+                RegisterEffect(floatingEffect, arrowUI.RectTransform);
+                
                 arrowUI.Show();
             }
         }
 
         protected override void OnDeactivate()
         {
+            ClearEffects();
+            
             if (arrowUI != null)
             {
                 arrowUI.Hide();
@@ -134,9 +131,17 @@ namespace TutorialSystem
 
         public override void UpdateModule()
         {
+            base.UpdateModule();
+            
             if (arrowUI != null && isActive)
             {
                 arrowUI.UpdatePosition();
+                
+                // 更新浮动效果基础位置
+                if (floatingEffect.Enabled && floatingEffect.IsPlaying)
+                {
+                    floatingEffect.UpdateBasePosition(arrowUI.RectTransform.anchoredPosition);
+                }
             }
         }
 
@@ -156,6 +161,16 @@ namespace TutorialSystem
                     resolvedTarget = go.GetComponent<RectTransform>();
                 }
             }
+        }
+
+        private Vector2 GetFloatDirection()
+        {
+            return direction switch
+            {
+                ArrowDirection.Up or ArrowDirection.Down => Vector2.up,
+                ArrowDirection.Left or ArrowDirection.Right => Vector2.right,
+                _ => new Vector2(0.707f, 0.707f)
+            };
         }
     }
 }

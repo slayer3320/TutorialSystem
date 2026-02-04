@@ -18,12 +18,11 @@ namespace TutorialSystem
         private HighlightType highlightType;
         private RectTransform targetUI;
         private Vector2 padding;
-        private bool enablePulseAnimation;
-        private float pulseSpeed;
-        private float pulseAmplitude;
-        private float animationTime;
         private Canvas targetCanvas;
         private bool clickMaskToNext;
+
+        // 暴露BorderRect供Effect使用
+        public RectTransform BorderRect => borderRect;
 
         public event Action OnMaskClicked;
 
@@ -37,18 +36,13 @@ namespace TutorialSystem
 
         public void Setup(RectTransform target, HighlightType type, HighlightShape shape,
             Color maskColor, Color highlightColor, Vector2 padding, float cornerRadius,
-            bool enablePulse, float pulseSpeed, float pulseAmplitude,
             bool blockRaycasts, bool clickToNext, Canvas canvas)
         {
             this.targetUI = target;
             this.highlightType = type;
             this.padding = padding;
-            this.enablePulseAnimation = enablePulse;
-            this.pulseSpeed = pulseSpeed;
-            this.pulseAmplitude = pulseAmplitude;
             this.targetCanvas = canvas;
             this.clickMaskToNext = clickToNext;
-            this.animationTime = 0f;
 
             SetupHighlightType(type, maskColor, highlightColor, blockRaycasts);
             UpdatePosition();
@@ -151,18 +145,6 @@ namespace TutorialSystem
         public void UpdateHighlight()
         {
             UpdatePosition();
-
-            if (enablePulseAnimation && borderImage != null)
-            {
-                animationTime += Time.deltaTime * pulseSpeed;
-                float scale = 1f + Mathf.Sin(animationTime) * pulseAmplitude;
-                borderImage.transform.localScale = Vector3.one * scale;
-
-                float alpha = 0.3f + Mathf.Sin(animationTime) * 0.2f;
-                var color = borderImage.color;
-                color.a = alpha;
-                borderImage.color = color;
-            }
         }
 
         private void UpdatePosition()
@@ -189,7 +171,6 @@ namespace TutorialSystem
         public void Reset()
         {
             targetUI = null;
-            animationTime = 0f;
 
             if (maskImage != null)
             {
@@ -205,3 +186,4 @@ namespace TutorialSystem
         }
     }
 }
+

@@ -10,20 +10,16 @@ namespace TutorialSystem
     {
         public static TutorialManager Instance { get; private set; }
 
-        [Header("UI 预制体")]
         [SerializeField] private GameObject arrowPrefab;
         [SerializeField] private GameObject popupPrefab;
         
-        [Header("UI 容器")]
         [SerializeField] private Transform uiContainer;
         [SerializeField] private Canvas targetCanvas;
 
-        [Header("本地化")]
         [SerializeField]
         [Tooltip("启用本地化支持，关闭后将使用原始文本")]
         private bool useLocalization = false;
 
-        [Header("调试")]
         [SerializeField] private bool debugMode = false;
 
         private TutorialContext currentContext;
@@ -67,6 +63,8 @@ namespace TutorialSystem
             if (!isRunning || currentContext == null) return;
 
             currentContext.CurrentStep?.completeTrigger?.Update();
+
+            if (!isRunning || currentContext == null) return;
 
             if (currentContext.CurrentStep?.modules != null)
             {

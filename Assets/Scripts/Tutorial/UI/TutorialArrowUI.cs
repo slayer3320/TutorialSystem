@@ -21,12 +21,10 @@ namespace TutorialSystem
         private ArrowDirection direction;
         private Vector2 offset;
         private Vector2 fixedPosition;
-        private bool enableFloatAnimation;
-        private float floatAmplitude;
-        private float floatSpeed;
-        private float floatTime;
-        private Vector2 basePosition;
         private Camera mainCamera;
+
+        // 暴露RectTransform供Effect使用
+        public RectTransform RectTransform => rectTransform;
 
         private void Awake()
         {
@@ -42,7 +40,7 @@ namespace TutorialSystem
 
         public void Setup(ArrowModule module, RectTransform targetUI, Transform worldTarget,
             PositionMode positionMode, ArrowDirection direction, Vector2 offset, Color color, 
-            float scale, bool enableFloatAnimation, float floatAmplitude, float floatSpeed, Vector2 fixedPosition)
+            float scale, Vector2 fixedPosition)
         {
             this.module = module;
             this.targetUI = targetUI;
@@ -51,10 +49,6 @@ namespace TutorialSystem
             this.direction = direction;
             this.offset = offset;
             this.fixedPosition = fixedPosition;
-            this.enableFloatAnimation = enableFloatAnimation;
-            this.floatAmplitude = floatAmplitude;
-            this.floatSpeed = floatSpeed;
-            this.floatTime = 0f;
 
             if (arrowImage != null)
             {
@@ -87,18 +81,7 @@ namespace TutorialSystem
         public void UpdatePosition()
         {
             Vector2 targetPos = CalculateTargetPosition();
-            basePosition = targetPos + offset;
-
-            if (enableFloatAnimation)
-            {
-                floatTime += Time.deltaTime * floatSpeed;
-                Vector2 floatOffset = GetFloatOffset();
-                rectTransform.anchoredPosition = basePosition + floatOffset;
-            }
-            else
-            {
-                rectTransform.anchoredPosition = basePosition;
-            }
+            rectTransform.anchoredPosition = targetPos + offset;
         }
 
         private Vector2 CalculateTargetPosition()
@@ -147,23 +130,6 @@ namespace TutorialSystem
             return localPos;
         }
 
-        private Vector2 GetFloatOffset()
-        {
-            float floatValue = Mathf.Sin(floatTime) * floatAmplitude;
-            
-            switch (direction)
-            {
-                case ArrowDirection.Up:
-                case ArrowDirection.Down:
-                    return new Vector2(0, floatValue);
-                case ArrowDirection.Left:
-                case ArrowDirection.Right:
-                    return new Vector2(floatValue, 0);
-                default:
-                    return new Vector2(floatValue * 0.707f, floatValue * 0.707f);
-            }
-        }
-
         private void ApplyRotation()
         {
             float angle = direction switch
@@ -183,3 +149,4 @@ namespace TutorialSystem
         }
     }
 }
+

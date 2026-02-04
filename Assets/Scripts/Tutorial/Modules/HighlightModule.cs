@@ -32,7 +32,6 @@ namespace TutorialSystem
     {
         public override string ModuleName => "高亮";
 
-        [Header("目标设置")]
         [SerializeField]
         [Tooltip("目标 UI 元素")]
         private RectTransform targetUI;
@@ -45,7 +44,6 @@ namespace TutorialSystem
         [Tooltip("边距")]
         private Vector2 padding = new Vector2(10f, 10f);
 
-        [Header("高亮设置")]
         [SerializeField]
         private HighlightType highlightType = HighlightType.CutoutMask;
 
@@ -64,17 +62,10 @@ namespace TutorialSystem
         [Tooltip("圆角半径")]
         private float cornerRadius = 10f;
 
-        [Header("动画设置")]
         [SerializeField]
-        private bool enablePulseAnimation = true;
+        [Tooltip("脉冲效果")]
+        private PulseEffect pulseEffect = new PulseEffect();
 
-        [SerializeField]
-        private float pulseSpeed = 2f;
-
-        [SerializeField]
-        private float pulseAmplitude = 0.1f;
-
-        [Header("交互设置")]
         [SerializeField]
         [Tooltip("阻挡非高亮区域点击")]
         private bool blockRaycasts = true;
@@ -111,11 +102,16 @@ namespace TutorialSystem
                 highlightUI.transform.SetParent(canvas?.transform, false);
                 highlightUI.Setup(resolvedTarget, highlightType, shape,
                     maskColor, highlightColor, padding, cornerRadius,
-                    enablePulseAnimation, pulseSpeed, pulseAmplitude,
                     blockRaycasts, clickMaskToNext, canvas);
 
                 if (clickMaskToNext)
                     highlightUI.OnMaskClicked += HandleMaskClick;
+
+                // 注册Effect到边框元素
+                if (highlightUI.BorderRect != null)
+                {
+                    RegisterEffect(pulseEffect, highlightUI.BorderRect);
+                }
 
                 highlightUI.Show();
             }
@@ -123,6 +119,8 @@ namespace TutorialSystem
 
         protected override void OnDeactivate()
         {
+            ClearEffects();
+            
             if (highlightUI != null)
             {
                 if (clickMaskToNext)
@@ -135,6 +133,8 @@ namespace TutorialSystem
 
         public override void UpdateModule()
         {
+            base.UpdateModule();
+            
             if (isActive && highlightUI != null)
                 highlightUI.UpdateHighlight();
         }
@@ -161,3 +161,4 @@ namespace TutorialSystem
         }
     }
 }
+

@@ -15,10 +15,8 @@ namespace TutorialSystem
         public string phaseName;
         public bool enabled = true;
 
-        [Header("Step List")]
         public List<TutorialStep> steps = new List<TutorialStep>();
 
-        [Header("Events")]
         public TutorialPhaseEvents events = new TutorialPhaseEvents();
 
         /// <summary>

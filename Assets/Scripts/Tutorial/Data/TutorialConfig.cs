@@ -11,20 +11,15 @@ namespace TutorialSystem
     [Serializable]
     public class TutorialConfig
     {
-        [Header("Basic Info")]
         public string tutorialId;
         public string tutorialName;
 
-        [Header("Localization")]
         public string localizationTableName = "Tutorial";
 
-        [Header("Phase List")]
         public List<TutorialPhase> phases = new List<TutorialPhase>();
 
-        [Header("Events")]
         public TutorialConfigEvents events = new TutorialConfigEvents();
 
-        [Header("Settings")]
         public bool saveProgressOnComplete = true;
         public bool canSkip = false;
 

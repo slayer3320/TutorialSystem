@@ -29,7 +29,6 @@ namespace TutorialSystem
     {
         public override string ModuleName => "弹窗";
 
-        [Header("内容设置")]
         [SerializeField]
         [Tooltip("本地化标题（启用本地化时使用）")]
         private LocalizedString localizedTitle;
@@ -47,7 +46,6 @@ namespace TutorialSystem
         [TextArea(3, 5)]
         private string rawContent;
 
-        [Header("按钮设置")]
         [SerializeField]
         [Tooltip("显示确认按钮")]
         private bool showButton = true;
@@ -56,7 +54,6 @@ namespace TutorialSystem
         [Tooltip("按钮本地化文本")]
         private LocalizedString buttonText;
 
-        [Header("位置设置")]
         [SerializeField]
         private PopupPosition position = PopupPosition.Center;
         
@@ -68,7 +65,6 @@ namespace TutorialSystem
         [Tooltip("位置偏移")]
         private Vector2 offset;
 
-        [Header("外观设置")]
         [SerializeField]
         [Tooltip("弹窗宽度（0 表示自动）")]
         private float width = 0f;
