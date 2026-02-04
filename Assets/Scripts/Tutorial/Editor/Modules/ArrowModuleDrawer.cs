@@ -51,8 +51,7 @@ namespace TutorialSystem.Editor
                 yOffset = DrawPropertyField(position, property, "scale", "Scale", yOffset);
 
                 // Effects
-                yOffset = DrawHeader(position, yOffset, "Effects");
-                yOffset = DrawPropertyField(position, property, "serializedEffects", "Effects", yOffset);
+                yOffset = DrawPropertyField(position, property, "effectSettings", "", yOffset);
 
                 EditorGUI.indentLevel--;
             }
@@ -93,9 +92,8 @@ namespace TutorialSystem.Editor
             height += GetPropertyHeight(property, "color");
             height += GetPropertyHeight(property, "scale");
 
-            // Effects header
-            height += EditorGUIUtility.singleLineHeight + 4;
-            height += GetPropertyHeight(property, "serializedEffects");
+            // Effects
+            height += GetPropertyHeight(property, "effectSettings");
 
             return height;
         }

@@ -75,8 +75,7 @@ namespace TutorialSystem.Editor
             }
 
             // Effects
-            yOffset = DrawHeader(position, yOffset, "Effects");
-            yOffset = DrawPropertyField(position, property, "serializedEffects", "Effects", yOffset);
+            yOffset = DrawPropertyField(position, property, "effectSettings", "", yOffset);
 
             EditorGUI.EndProperty();
         }
@@ -137,9 +136,8 @@ namespace TutorialSystem.Editor
                 height += GetPropertyHeight(property, "buttonText");
             }
 
-            // Effects header
-            height += EditorGUIUtility.singleLineHeight + 4;
-            height += GetPropertyHeight(property, "serializedEffects");
+            // Effects
+            height += GetPropertyHeight(property, "effectSettings");
 
             return height;
         }

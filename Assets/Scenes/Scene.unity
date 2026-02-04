@@ -1152,9 +1152,9 @@ MonoBehaviour:
     tutorialName: "\u6F14\u793A\u6559\u7A0B"
     localizationTableName: Tutorial
     phases:
-    - phaseName: 123
+    - phaseName: "\u65B0\u624B\u6559\u7A0B"
       steps:
-      - stepName: 123
+      - stepName: "\u7BAD\u5934\u6307\u5411\u5DE6\u4E0A\u89D2"
         localizedTitle:
           m_TableReference:
             m_TableCollectionName: 
@@ -1179,6 +1179,33 @@ MonoBehaviour:
           rid: 7067024224276447321
         modules:
         - rid: 7067024224276447304
+        pauseOnEnter: 0
+        resumeOnExit: 0
+      - stepName: "\u4E2D\u95F4\u663E\u793A\u5BF9\u8BDD"
+        localizedTitle:
+          m_TableReference:
+            m_TableCollectionName: 
+          m_TableEntryReference:
+            m_KeyId: 0
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+        rawTitle: 123
+        localizedContent:
+          m_TableReference:
+            m_TableCollectionName: 
+          m_TableEntryReference:
+            m_KeyId: 0
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+        rawContent: 123
+        completeTrigger:
+          rid: 7067024224276447321
+        modules:
+        - rid: 7067024224276447323
         pauseOnEnter: 0
         resumeOnExit: 0
     - phaseName: 
@@ -1231,24 +1258,26 @@ MonoBehaviour:
         manualPosition: {x: 0, y: 0}
         sizeType: 0
         customSize: {x: 200, y: 100}
-        serializedEffects:
-        - rid: 7067024220487417934
-        - rid: 7067024220487417935
+        effectSettings:
+          floatingEnabled: 0
+          floatingEffect:
+            amplitude: 10
+            speed: 2
+            direction: {x: 0, y: 1}
+          fadeInEnabled: 0
+          fadeInEffect:
+            duration: 0.3
+            startAlpha: 0
+            endAlpha: 1
+          pulseEnabled: 0
+          pulseEffect:
+            speed: 2
+            scaleAmplitude: 0.1
+            alphaAmplitude: 0.2
+            baseAlpha: 0.3
         direction: 1
         color: {r: 1, g: 1, b: 1, a: 1}
         scale: 1
-    - rid: 7067024220487417934
-      type: {class: FloatingEffect, ns: TutorialSystem, asm: Assembly-CSharp}
-      data:
-        amplitude: 10
-        speed: 2
-        direction: {x: 0, y: 1}
-    - rid: 7067024220487417935
-      type: {class: FadeInEffect, ns: TutorialSystem, asm: Assembly-CSharp}
-      data:
-        duration: 0.3
-        startAlpha: 0
-        endAlpha: 1
     - rid: 7067024224276447304
       type: {class: ArrowModule, ns: TutorialSystem, asm: Assembly-CSharp}
       data:
@@ -1257,28 +1286,98 @@ MonoBehaviour:
         positionMode: 0
         targetType: 0
         target: {fileID: 603416382}
-        placementType: 1
+        placementType: 5
         constrainToCanvas: 0
-        positionOffset: {x: 0, y: -50}
+        positionOffset: {x: 50, y: -50}
         manualPosition: {x: 0, y: 0}
         sizeType: 0
         customSize: {x: 200, y: 100}
-        serializedEffects:
-        - rid: 7067024224276447305
+        effectSettings:
+          floatingEnabled: 0
+          floatingEffect:
+            amplitude: 10
+            speed: 2
+            direction: {x: 0, y: 1}
+          fadeInEnabled: 0
+          fadeInEffect:
+            duration: 0.3
+            startAlpha: 0
+            endAlpha: 1
+          pulseEnabled: 0
+          pulseEffect:
+            speed: 2
+            scaleAmplitude: 0.1
+            alphaAmplitude: 0.2
+            baseAlpha: 0.3
         direction: 0
         color: {r: 0, g: 0, b: 0, a: 1}
         scale: 1
-    - rid: 7067024224276447305
-      type: {class: FloatingEffect, ns: TutorialSystem, asm: Assembly-CSharp}
-      data:
-        amplitude: 10
-        speed: 2
-        direction: {x: 0, y: 1}
     - rid: 7067024224276447321
       type: {class: KeyPressTrigger, ns: TutorialSystem, asm: Assembly-CSharp}
       data:
         triggerKey: 32
         anyKey: 0
+    - rid: 7067024224276447323
+      type: {class: PopupModule, ns: TutorialSystem, asm: Assembly-CSharp}
+      data:
+        updateEveryFrame: 0
+        targetCanvas: {fileID: 815075517}
+        positionMode: 1
+        targetType: 0
+        target: {fileID: 0}
+        placementType: 0
+        constrainToCanvas: 0
+        positionOffset: {x: 0, y: 0}
+        manualPosition: {x: 0, y: 0}
+        sizeType: 0
+        customSize: {x: 200, y: 100}
+        effectSettings:
+          floatingEnabled: 0
+          floatingEffect:
+            amplitude: 10
+            speed: 2
+            direction: {x: 0, y: 1}
+          fadeInEnabled: 0
+          fadeInEffect:
+            duration: 0.3
+            startAlpha: 0
+            endAlpha: 1
+          pulseEnabled: 0
+          pulseEffect:
+            speed: 2
+            scaleAmplitude: 0.1
+            alphaAmplitude: 0.2
+            baseAlpha: 0.3
+        localizedTitle:
+          m_TableReference:
+            m_TableCollectionName: 
+          m_TableEntryReference:
+            m_KeyId: 0
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+        rawTitle: gugugaga
+        localizedContent:
+          m_TableReference:
+            m_TableCollectionName: 
+          m_TableEntryReference:
+            m_KeyId: 0
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+        rawContent: aba aba
+        showButton: 1
+        buttonText:
+          m_TableReference:
+            m_TableCollectionName: 
+          m_TableEntryReference:
+            m_KeyId: 0
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
 --- !u!4 &1869012287
 Transform:
   m_ObjectHideFlags: 0

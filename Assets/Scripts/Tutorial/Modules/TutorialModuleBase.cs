@@ -122,9 +122,8 @@ namespace TutorialSystem
         #region Effects
 
         [SerializeField]
-        [Tooltip("效果列表")]
-        [SerializeReference]
-        protected List<IEffect> serializedEffects = new List<IEffect>();
+        [Tooltip("效果设置")]
+        protected EffectSettings effectSettings = new EffectSettings();
 
         #endregion
 
@@ -135,9 +134,6 @@ namespace TutorialSystem
 
         // 运行时Effect列表
         protected List<IEffect> runtimeEffects = new List<IEffect>();
-
-        // 已添加的Effect类型集合（防止重复）
-        private HashSet<Type> effectTypes = new HashSet<Type>();
 
         #region Properties Accessors
 
@@ -185,8 +181,6 @@ namespace TutorialSystem
             {
                 targetCanvas = context.TargetCanvas;
             }
-
-            ValidateEffects();
         }
 
         public virtual void Activate()
@@ -210,51 +204,8 @@ namespace TutorialSystem
             // 更新所有Effect
             foreach (var effect in runtimeEffects)
             {
-                if (effect != null)
-                    effect.Update();
+                effect?.Update();
             }
-        }
-
-        /// <summary>
-        /// 验证并移除重复类型的Effect
-        /// </summary>
-        protected void ValidateEffects()
-        {
-            effectTypes.Clear();
-            serializedEffects.RemoveAll(effect =>
-            {
-                if (effect == null) return true;
-                var type = effect.GetType();
-                if (effectTypes.Contains(type)) return true;
-                effectTypes.Add(type);
-                return false;
-            });
-        }
-
-        /// <summary>
-        /// 检查是否可以添加指定类型的Effect
-        /// </summary>
-        public bool CanAddEffect<T>() where T : IEffect
-        {
-            return !effectTypes.Contains(typeof(T));
-        }
-
-        /// <summary>
-        /// 检查是否可以添加指定类型的Effect
-        /// </summary>
-        public bool CanAddEffect(Type effectType)
-        {
-            if (effectType == null) return false;
-            
-            // 重新构建类型集合
-            effectTypes.Clear();
-            foreach (var effect in serializedEffects)
-            {
-                if (effect != null)
-                    effectTypes.Add(effect.GetType());
-            }
-            
-            return !effectTypes.Contains(effectType);
         }
 
         /// <summary>
@@ -263,17 +214,7 @@ namespace TutorialSystem
         protected void InitializeAndPlayEffects(RectTransform target)
         {
             if (target == null) return;
-
-            runtimeEffects.Clear();
-            foreach (var effect in serializedEffects)
-            {
-                if (effect != null)
-                {
-                    effect.Initialize(target);
-                    effect.Play();
-                    runtimeEffects.Add(effect);
-                }
-            }
+            effectSettings.InitializeAndPlay(target, runtimeEffects);
         }
 
         /// <summary>
@@ -281,15 +222,7 @@ namespace TutorialSystem
         /// </summary>
         protected void StopAllEffects()
         {
-            foreach (var effect in runtimeEffects)
-            {
-                if (effect != null)
-                {
-                    effect.Stop();
-                    effect.Reset();
-                }
-            }
-            runtimeEffects.Clear();
+            effectSettings.StopAll(runtimeEffects);
         }
 
         /// <summary>
