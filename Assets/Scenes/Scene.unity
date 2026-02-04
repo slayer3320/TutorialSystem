@@ -1153,10 +1153,8 @@ MonoBehaviour:
     localizationTableName: Tutorial
     phases:
     - phaseName: 123
-      enabled: 1
       steps:
       - stepName: 123
-        enabled: 1
         localizedTitle:
           m_TableReference:
             m_TableCollectionName: 
@@ -1178,16 +1176,14 @@ MonoBehaviour:
           m_LocalVariables: []
         rawContent: 123
         completeTrigger:
-          rid: 7067024205758333119
+          rid: 7067024224276447321
         modules:
         - rid: 7067024224276447304
         pauseOnEnter: 0
         resumeOnExit: 0
     - phaseName: 
-      enabled: 1
       steps:
       - stepName: 
-        enabled: 0
         localizedTitle:
           m_TableReference:
             m_TableCollectionName: 
@@ -1214,23 +1210,16 @@ MonoBehaviour:
         - rid: 7067024218802880587
         pauseOnEnter: 0
         resumeOnExit: 0
-    canSkip: 1
-  autoStartOnEnable: 1
+    canSkip: 0
+  autoStartOnEnable: 0
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 7067024205758333119
-      type: {class: KeyPressTrigger, ns: TutorialSystem, asm: Assembly-CSharp}
-      data:
-        isEnabled: 0
-        triggerKey: 32
-        anyKey: 1
     - rid: 7067024218802880587
       type: {class: ArrowModule, ns: TutorialSystem, asm: Assembly-CSharp}
       data:
-        enabled: 1
         updateEveryFrame: 0
         targetCanvas: {fileID: 0}
         positionMode: 0
@@ -1251,21 +1240,18 @@ MonoBehaviour:
     - rid: 7067024220487417934
       type: {class: FloatingEffect, ns: TutorialSystem, asm: Assembly-CSharp}
       data:
-        enabled: 1
         amplitude: 10
         speed: 2
         direction: {x: 0, y: 1}
     - rid: 7067024220487417935
       type: {class: FadeInEffect, ns: TutorialSystem, asm: Assembly-CSharp}
       data:
-        enabled: 1
         duration: 0.3
         startAlpha: 0
         endAlpha: 1
     - rid: 7067024224276447304
       type: {class: ArrowModule, ns: TutorialSystem, asm: Assembly-CSharp}
       data:
-        enabled: 1
         updateEveryFrame: 0
         targetCanvas: {fileID: 815075517}
         positionMode: 0
@@ -1285,10 +1271,14 @@ MonoBehaviour:
     - rid: 7067024224276447305
       type: {class: FloatingEffect, ns: TutorialSystem, asm: Assembly-CSharp}
       data:
-        enabled: 1
         amplitude: 10
         speed: 2
         direction: {x: 0, y: 1}
+    - rid: 7067024224276447321
+      type: {class: KeyPressTrigger, ns: TutorialSystem, asm: Assembly-CSharp}
+      data:
+        triggerKey: 32
+        anyKey: 0
 --- !u!4 &1869012287
 Transform:
   m_ObjectHideFlags: 0
