@@ -17,8 +17,7 @@ namespace TutorialSystem.Editor
             { "Manual Trigger", typeof(ManualTrigger) },
             { "Timer Trigger", typeof(TimerTrigger) },
             { "Button Click Trigger", typeof(ButtonClickTrigger) },
-            { "Key Press Trigger", typeof(KeyPressTrigger) },
-            { "Game Event Trigger", typeof(GameEventTrigger) }
+            { "Key Press Trigger", typeof(KeyPressTrigger) }
         };
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -79,6 +78,13 @@ namespace TutorialSystem.Editor
                     {
                         if (SerializedProperty.EqualContents(iterator, endProperty))
                             break;
+
+                        // 跳过隐藏的属性
+                        if (ShouldHideProperty(property, iterator))
+                        {
+                            continue;
+                        }
+
                         height += EditorGUI.GetPropertyHeight(iterator, true) + 2;
                     }
                     while (iterator.NextVisible(false));
@@ -125,7 +131,13 @@ namespace TutorialSystem.Editor
                 {
                     if (SerializedProperty.EqualContents(iterator, endProperty))
                         break;
-                    
+
+                    // 特殊处理：KeyPressTrigger 的 triggerKey 字段
+                    if (ShouldHideProperty(property, iterator))
+                    {
+                        continue;
+                    }
+
                     var propHeight = EditorGUI.GetPropertyHeight(iterator, true);
                     var propRect = new Rect(position.x, position.y + yOffset, position.width, propHeight);
                     EditorGUI.PropertyField(propRect, iterator, true);
@@ -133,6 +145,21 @@ namespace TutorialSystem.Editor
                 }
                 while (iterator.NextVisible(false));
             }
+        }
+
+        private bool ShouldHideProperty(SerializedProperty parentProperty, SerializedProperty childProperty)
+        {
+            // 如果是 KeyPressTrigger 类型
+            if (parentProperty.managedReferenceValue is KeyPressTrigger keyPressTrigger)
+            {
+                // 如果 anyKey 为 true，隐藏 triggerKey 字段
+                if (childProperty.name == "triggerKey" && keyPressTrigger.AnyKey)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 

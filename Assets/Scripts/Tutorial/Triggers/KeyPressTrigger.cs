@@ -12,15 +12,19 @@ namespace TutorialSystem
         public override string TriggerName => "按键触发";
 
         [SerializeField]
-        [Tooltip("触发按键")]
-        private KeyCode triggerKey = KeyCode.Space;
-
-        [SerializeField]
         [Tooltip("是否允许任意键触发")]
         private bool anyKey = false;
 
+        [SerializeField]
+        [Tooltip("触发按键")]
+        private KeyCode triggerKey = KeyCode.Space;
+
+        public bool AnyKey => anyKey;
+
         public override void Update()
         {
+            base.Update();
+
             if (isTriggered) return;
 
             if (anyKey)

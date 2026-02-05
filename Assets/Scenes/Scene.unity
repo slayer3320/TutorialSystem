@@ -1156,7 +1156,7 @@ MonoBehaviour:
       steps:
       - stepName: "\u7BAD\u5934\u6307\u5411\u5DE6\u4E0A\u89D2"
         completeTrigger:
-          rid: 7067024224276447321
+          rid: 7067024241561174096
         modules:
         - rid: 7067024224276447304
         - rid: 7067024241561174016
@@ -1257,8 +1257,9 @@ MonoBehaviour:
     - rid: 7067024224276447321
       type: {class: KeyPressTrigger, ns: TutorialSystem, asm: Assembly-CSharp}
       data:
-        triggerKey: 32
+        delayTime: 0
         anyKey: 0
+        triggerKey: 32
     - rid: 7067024224276447323
       type: {class: PopupModule, ns: TutorialSystem, asm: Assembly-CSharp}
       data:
@@ -1417,6 +1418,10 @@ MonoBehaviour:
         sprite: {fileID: 0}
         color: {r: 1, g: 1, b: 1, a: 1}
         preserveAspect: 1
+    - rid: 7067024241561174096
+      type: {class: ManualTrigger, ns: TutorialSystem, asm: Assembly-CSharp}
+      data:
+        delayTime: 0
 --- !u!4 &1869012287
 Transform:
   m_ObjectHideFlags: 0
@@ -1463,6 +1468,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TutorialSystem.TutorialManager
   arrowPrefab: {fileID: 1596002136139788, guid: e95abb79253bc7c4e8c59edf2c9108e5, type: 3}
   popupPrefab: {fileID: 1757758472786602, guid: ad38a0cfb0727094ca8d032ad2e6d967, type: 3}
+  spritePrefab: {fileID: 0}
   uiContainer: {fileID: 693319049}
   targetCanvas: {fileID: 1081843214}
   useLocalization: 1

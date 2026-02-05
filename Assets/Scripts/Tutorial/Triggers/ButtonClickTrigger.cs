@@ -13,59 +13,29 @@ namespace TutorialSystem
         public override string TriggerName => "按钮点击触发";
 
         [SerializeField]
-        [Tooltip("目标按钮（如果为空，需在运行时设置）")]
+        [Tooltip("目标按钮")]
         private Button targetButton;
-
-        [SerializeField]
-        [Tooltip("通过路径查找按钮（如果 targetButton 为空）")]
-        private string buttonPath;
-
-        private Button resolvedButton;
 
         public void SetTargetButton(Button button)
         {
             targetButton = button;
         }
 
-        public override void Initialize(TutorialContext context)
-        {
-            base.Initialize(context);
-            ResolveButton();
-        }
-
-        private void ResolveButton()
-        {
-            if (targetButton != null)
-            {
-                resolvedButton = targetButton;
-                return;
-            }
-
-            if (!string.IsNullOrEmpty(buttonPath))
-            {
-                var go = GameObject.Find(buttonPath);
-                if (go != null)
-                {
-                    resolvedButton = go.GetComponent<Button>();
-                }
-            }
-        }
-
         public override void Enable()
         {
             base.Enable();
-            if (resolvedButton != null)
+            if (targetButton != null)
             {
-                resolvedButton.onClick.AddListener(OnButtonClick);
+                targetButton.onClick.AddListener(OnButtonClick);
             }
         }
 
         public override void Disable()
         {
             base.Disable();
-            if (resolvedButton != null)
+            if (targetButton != null)
             {
-                resolvedButton.onClick.RemoveListener(OnButtonClick);
+                targetButton.onClick.RemoveListener(OnButtonClick);
             }
         }
 

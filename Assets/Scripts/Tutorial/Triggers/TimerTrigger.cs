@@ -37,11 +37,12 @@ namespace TutorialSystem
         public override void Update()
         {
             if (isTriggered) return;
-            
+
             elapsedTime += Time.deltaTime;
             if (elapsedTime >= delay)
             {
-                Trigger();
+                // Timer触发器不使用额外的delayTime，直接完成触发
+                CompleteTrigger();
             }
         }
     }
