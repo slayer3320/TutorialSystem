@@ -1466,9 +1466,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0588ecc335c7db74aa107c3b0a5dac2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TutorialSystem.TutorialManager
-  arrowPrefab: {fileID: 1596002136139788, guid: e95abb79253bc7c4e8c59edf2c9108e5, type: 3}
-  popupPrefab: {fileID: 1757758472786602, guid: ad38a0cfb0727094ca8d032ad2e6d967, type: 3}
-  spritePrefab: {fileID: 0}
+  arrowPrefab: {fileID: 1596002136139788, guid: cf484724323451c4fa68d2b5bb30df8f, type: 3}
+  popupPrefab: {fileID: 1757758472786602, guid: 36d6021fc80c5cb4e9e309fb96d985a5, type: 3}
+  spritePrefab: {fileID: 1488525494055102, guid: c0d700aba2e3ece46a9df5002c72d40b, type: 3}
   uiContainer: {fileID: 693319049}
   targetCanvas: {fileID: 1081843214}
   useLocalization: 1

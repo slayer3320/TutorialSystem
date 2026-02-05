@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 222694489568267292}
   - component: {fileID: 114454052909300236}
   - component: {fileID: 225326282372040882}
-  - component: {fileID: 3214540079538346822}
+  - component: {fileID: 7392416214988589035}
   m_Layer: 5
   m_Name: Module_Arrow
   m_TagString: Untagged
@@ -89,7 +89,7 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
---- !u!114 &3214540079538346822
+--- !u!114 &7392416214988589035
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,6 +101,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32909d8b4c51093408c57c5bd3249f81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TutorialSystem.TutorialArrowUI
-  arrowImage: {fileID: 114454052909300236}
-  rectTransform: {fileID: 224705269093435170}
-  canvasGroup: {fileID: 225326282372040882}
+  arrowImage: {fileID: 0}
+  rectTransform: {fileID: 0}
+  canvasGroup: {fileID: 0}

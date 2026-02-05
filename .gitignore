@@ -61,3 +61,7 @@ crashlytics-build.properties
 # Ignore Plugins folder
 /Assets/Plugins/
 /Assets/Plugins.meta
+
+# VSCode and development files
+.vscode/
+AGENTS.md
