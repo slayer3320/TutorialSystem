@@ -95,7 +95,11 @@ namespace TutorialSystem.Editor
                 }
 
                 EditorGUILayout.Space(4);
-                DrawAddRemoveButtons(phasesProp, "Phase");
+                DrawAddRemoveButtons(phasesProp, "Phase", (prop) =>
+                {
+                    prop.FindPropertyRelative("phaseName").stringValue = "New Phase";
+                    prop.FindPropertyRelative("steps").ClearArray();
+                });
 
                 EditorGUI.indentLevel--;
             }
@@ -172,7 +176,12 @@ namespace TutorialSystem.Editor
             }
 
             EditorGUILayout.Space(2);
-            DrawAddRemoveButtons(stepsProp, "Step");
+            DrawAddRemoveButtons(stepsProp, "Step", (prop) =>
+            {
+                prop.FindPropertyRelative("stepName").stringValue = "New Step";
+                prop.FindPropertyRelative("modules").ClearArray();
+                prop.FindPropertyRelative("completeTrigger").managedReferenceValue = null;
+            });
         }
 
         private void DrawStepItem(SerializedProperty stepsProp, int stepIndex, int phaseIndex)
@@ -454,7 +463,7 @@ namespace TutorialSystem.Editor
             return moduleProp.managedReferenceValue.GetType().Name.Replace("Module", "");
         }
 
-        private void DrawAddRemoveButtons(SerializedProperty arrayProp, string itemName)
+        private void DrawAddRemoveButtons(SerializedProperty arrayProp, string itemName, Action<SerializedProperty> onAdded = null)
         {
             EditorGUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
@@ -462,6 +471,8 @@ namespace TutorialSystem.Editor
             if (GUILayout.Button($"+ Add {itemName}", GUILayout.Width(100)))
             {
                 arrayProp.InsertArrayElementAtIndex(arrayProp.arraySize);
+                var newProp = arrayProp.GetArrayElementAtIndex(arrayProp.arraySize - 1);
+                onAdded?.Invoke(newProp);
             }
 
             if (arrayProp.arraySize > 0)
