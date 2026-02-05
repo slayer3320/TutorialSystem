@@ -71,7 +71,11 @@ namespace TutorialSystem.Editor
             yOffset = DrawPropertyField(position, property, "showButton", "Show Button", yOffset);
             if (useLocalization)
             {
-                yOffset = DrawPropertyField(position, property, "buttonText", "Button Text", yOffset);
+                yOffset = DrawPropertyField(position, property, "localizedButtonText", "Button Text", yOffset);
+            }
+            else
+            {
+                yOffset = DrawPropertyField(position, property, "rawButtonText", "Button Text", yOffset);
             }
 
             // Effects
@@ -133,7 +137,11 @@ namespace TutorialSystem.Editor
             height += GetPropertyHeight(property, "showButton");
             if (useLocalization)
             {
-                height += GetPropertyHeight(property, "buttonText");
+                height += GetPropertyHeight(property, "localizedButtonText");
+            }
+            else
+            {
+                height += GetPropertyHeight(property, "rawButtonText");
             }
 
             // Effects

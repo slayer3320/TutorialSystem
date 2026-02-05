@@ -10,7 +10,7 @@ namespace TutorialSystem
     [Serializable]
     public class PopupModule : TutorialModuleBase
     {
-        public override string ModuleName => "弹窗";
+        public override string ModuleName => "Popup";
 
         #region Content Properties
 
@@ -36,8 +36,12 @@ namespace TutorialSystem
         private bool showButton = true;
 
         [SerializeField]
-        [Tooltip("按钮本地化文本")]
-        private LocalizedString buttonText;
+        [Tooltip("按钮本地化文本（启用本地化时使用）")]
+        private LocalizedString localizedButtonText;
+
+        [SerializeField]
+        [Tooltip("按钮原始文本（未启用本地化时使用）")]
+        private string rawButtonText = "OK";
 
         #endregion
 
@@ -71,9 +75,9 @@ namespace TutorialSystem
                     ? localizedContent.GetLocalizedString()
                     : rawContent;
 
-                string btnText = useLocalization && !buttonText.IsEmpty
-                    ? buttonText.GetLocalizedString()
-                    : "OK";
+                string btnText = useLocalization && !localizedButtonText.IsEmpty
+                    ? localizedButtonText.GetLocalizedString()
+                    : rawButtonText;
 
                 // 计算位置
                 PopupPosition popupPosition;

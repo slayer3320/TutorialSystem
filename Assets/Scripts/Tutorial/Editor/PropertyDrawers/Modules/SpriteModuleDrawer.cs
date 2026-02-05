@@ -5,10 +5,10 @@ using UnityEditor;
 namespace TutorialSystem.Editor
 {
     /// <summary>
-    /// HighlightModule专属Drawer
+    /// SpriteModule专属Drawer
     /// </summary>
-    [CustomPropertyDrawer(typeof(HighlightModule))]
-    public class HighlightModuleDrawer : PropertyDrawer
+    [CustomPropertyDrawer(typeof(SpriteModule))]
+    public class SpriteModuleDrawer : PropertyDrawer
     {
         private bool foldout = true;
 
@@ -44,16 +44,21 @@ namespace TutorialSystem.Editor
                 }
                 yOffset = DrawPropertyField(position, property, "positionOffset", "Position Offset", yOffset);
 
-                // Highlight Properties
-                yOffset = DrawHeader(position, yOffset, "Highlight Properties");
-                yOffset = DrawPropertyField(position, property, "highlightType", "Highlight Type", yOffset);
-                yOffset = DrawPropertyField(position, property, "shape", "Shape", yOffset);
-                yOffset = DrawPropertyField(position, property, "maskColor", "Mask Color", yOffset);
-                yOffset = DrawPropertyField(position, property, "highlightColor", "Highlight Color", yOffset);
-                yOffset = DrawPropertyField(position, property, "padding", "Padding", yOffset);
-                yOffset = DrawPropertyField(position, property, "cornerRadius", "Corner Radius", yOffset);
-                yOffset = DrawPropertyField(position, property, "blockRaycasts", "Block Raycasts", yOffset);
-                yOffset = DrawPropertyField(position, property, "clickMaskToNext", "Click Mask To Next", yOffset);
+                // Size Properties
+                yOffset = DrawHeader(position, yOffset, "Size Properties");
+                yOffset = DrawPropertyField(position, property, "sizeType", "Size Type", yOffset);
+
+                var sizeTypeProp = property.FindPropertyRelative("sizeType");
+                if (sizeTypeProp != null && (ModuleSizeType)sizeTypeProp.enumValueIndex == ModuleSizeType.CustomSize)
+                {
+                    yOffset = DrawPropertyField(position, property, "customSize", "Custom Size", yOffset);
+                }
+
+                // Sprite Properties
+                yOffset = DrawHeader(position, yOffset, "Sprite Properties");
+                yOffset = DrawPropertyField(position, property, "sprite", "Sprite", yOffset);
+                yOffset = DrawPropertyField(position, property, "color", "Color", yOffset);
+                yOffset = DrawPropertyField(position, property, "preserveAspect", "Preserve Aspect", yOffset);
 
                 // Effects
                 yOffset = DrawPropertyField(position, property, "effectSettings", "", yOffset);
@@ -91,16 +96,21 @@ namespace TutorialSystem.Editor
             }
             height += GetPropertyHeight(property, "positionOffset");
 
-            // Highlight Properties header
+            // Size Properties header
             height += EditorGUIUtility.singleLineHeight + 4;
-            height += GetPropertyHeight(property, "highlightType");
-            height += GetPropertyHeight(property, "shape");
-            height += GetPropertyHeight(property, "maskColor");
-            height += GetPropertyHeight(property, "highlightColor");
-            height += GetPropertyHeight(property, "padding");
-            height += GetPropertyHeight(property, "cornerRadius");
-            height += GetPropertyHeight(property, "blockRaycasts");
-            height += GetPropertyHeight(property, "clickMaskToNext");
+            height += GetPropertyHeight(property, "sizeType");
+
+            var sizeTypeProp = property.FindPropertyRelative("sizeType");
+            if (sizeTypeProp != null && (ModuleSizeType)sizeTypeProp.enumValueIndex == ModuleSizeType.CustomSize)
+            {
+                height += GetPropertyHeight(property, "customSize");
+            }
+
+            // Sprite Properties header
+            height += EditorGUIUtility.singleLineHeight + 4;
+            height += GetPropertyHeight(property, "sprite");
+            height += GetPropertyHeight(property, "color");
+            height += GetPropertyHeight(property, "preserveAspect");
 
             // Effects
             height += GetPropertyHeight(property, "effectSettings");

@@ -10,26 +10,23 @@ namespace TutorialSystem
     {
         private static Queue<TutorialArrowUI> arrowPool = new Queue<TutorialArrowUI>();
         private static Queue<TutorialPopupUI> popupPool = new Queue<TutorialPopupUI>();
-        private static Queue<TutorialHighlightUI> highlightPool = new Queue<TutorialHighlightUI>();
+        private static Queue<TutorialSpriteUI> spritePool = new Queue<TutorialSpriteUI>();
 
         private static GameObject arrowPrefab;
         private static GameObject popupPrefab;
         private static GameObject highlightPrefab;
+        private static GameObject spritePrefab;
         private static Transform poolContainer;
 
         public static void Initialize(GameObject arrowPrefab, GameObject popupPrefab, Transform container)
         {
             TutorialUIPool.arrowPrefab = arrowPrefab;
             TutorialUIPool.popupPrefab = popupPrefab;
+            TutorialUIPool.spritePrefab = spritePrefab;
             poolContainer = container;
         }
 
-        public static void SetHighlightPrefab(GameObject prefab)
-        {
-            highlightPrefab = prefab;
-        }
-
-        public static void PrewarmPool(int arrowCount = 2, int popupCount = 1, int highlightCount = 1)
+        public static void PrewarmPool(int arrowCount = 2, int popupCount = 1, int highlightCount = 1, int spriteCount = 2)
         {
             for (int i = 0; i < arrowCount; i++)
             {
@@ -51,13 +48,13 @@ namespace TutorialSystem
                 }
             }
 
-            for (int i = 0; i < highlightCount; i++)
+            for (int i = 0; i < spriteCount; i++)
             {
-                var highlight = CreateHighlight();
-                if (highlight != null)
+                var sprite = CreateSprite();
+                if (sprite != null)
                 {
-                    highlight.Hide();
-                    highlightPool.Enqueue(highlight);
+                    sprite.Hide();
+                    spritePool.Enqueue(sprite);
                 }
             }
         }
@@ -124,46 +121,45 @@ namespace TutorialSystem
 
         #endregion
 
-        #region Highlight
+        #region Sprite
 
-        public static TutorialHighlightUI GetHighlight()
+        public static TutorialSpriteUI GetSprite()
         {
-            if (highlightPool.Count > 0)
-                return highlightPool.Dequeue();
-            return CreateHighlight();
+            if (spritePool.Count > 0)
+                return spritePool.Dequeue();
+            return CreateSprite();
         }
 
-        public static void ReturnHighlight(TutorialHighlightUI highlight)
+        public static void ReturnSprite(TutorialSpriteUI sprite)
         {
-            if (highlight != null)
+            if (sprite != null)
             {
-                highlight.Reset();
-                highlight.Hide();
-                highlightPool.Enqueue(highlight);
+                sprite.Hide();
+                spritePool.Enqueue(sprite);
             }
         }
 
-        private static TutorialHighlightUI CreateHighlight()
+        private static TutorialSpriteUI CreateSprite()
         {
-            if (highlightPrefab != null)
+            if (spritePrefab != null)
             {
-                var go = Object.Instantiate(highlightPrefab, poolContainer);
-                return go.GetComponent<TutorialHighlightUI>();
+                var go = Object.Instantiate(spritePrefab, poolContainer);
+                return go.GetComponent<TutorialSpriteUI>();
             }
 
             // 无预制体时动态创建
-            var highlightObj = new GameObject("TutorialHighlight");
+            var spriteObj = new GameObject("TutorialSprite");
             if (poolContainer != null)
-                highlightObj.transform.SetParent(poolContainer, false);
+                spriteObj.transform.SetParent(poolContainer, false);
 
-            var rectTransform = highlightObj.AddComponent<RectTransform>();
-            rectTransform.anchorMin = Vector2.zero;
-            rectTransform.anchorMax = Vector2.one;
-            rectTransform.offsetMin = Vector2.zero;
-            rectTransform.offsetMax = Vector2.zero;
+            var rectTransform = spriteObj.AddComponent<RectTransform>();
+            rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+            rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+            rectTransform.sizeDelta = new Vector2(100, 100);
 
-            highlightObj.AddComponent<CanvasGroup>();
-            return highlightObj.AddComponent<TutorialHighlightUI>();
+            spriteObj.AddComponent<CanvasGroup>();
+            spriteObj.AddComponent<UnityEngine.UI.Image>();
+            return spriteObj.AddComponent<TutorialSpriteUI>();
         }
 
         #endregion
@@ -184,11 +180,11 @@ namespace TutorialSystem
                     Object.Destroy(popup.gameObject);
             }
 
-            while (highlightPool.Count > 0)
+            while (spritePool.Count > 0)
             {
-                var highlight = highlightPool.Dequeue();
-                if (highlight != null)
-                    Object.Destroy(highlight.gameObject);
+                var sprite = spritePool.Dequeue();
+                if (sprite != null)
+                    Object.Destroy(sprite.gameObject);
             }
         }
     }

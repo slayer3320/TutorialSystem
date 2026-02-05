@@ -10,8 +10,11 @@ namespace TutorialSystem
     {
         public static TutorialManager Instance { get; private set; }
 
+        [Header("UI Prefabs")]
         [SerializeField] private GameObject arrowPrefab;
         [SerializeField] private GameObject popupPrefab;
+        [SerializeField] private GameObject spritePrefab;
+        
         
         [SerializeField] private Transform uiContainer;
         [SerializeField] private Canvas targetCanvas;

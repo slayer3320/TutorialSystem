@@ -24,7 +24,7 @@ namespace TutorialSystem.Editor
         {
             { "Popup Module", typeof(PopupModule) },
             { "Arrow Module", typeof(ArrowModule) },
-            { "Highlight Module", typeof(HighlightModule) }
+            { "Sprite Module", typeof(SpriteModule) }
         };
 
         private void OnEnable()
@@ -245,18 +245,7 @@ namespace TutorialSystem.Editor
 
             EditorGUILayout.Space(4);
 
-            // Content
-            EditorGUILayout.LabelField("Content", EditorStyles.miniBoldLabel);
-            if (useLocalization)
-            {
-                EditorGUILayout.PropertyField(stepProp.FindPropertyRelative("localizedTitle"), new GUIContent("Title"));
-                EditorGUILayout.PropertyField(stepProp.FindPropertyRelative("localizedContent"), new GUIContent("Content"));
-            }
-            else
-            {
-                EditorGUILayout.PropertyField(stepProp.FindPropertyRelative("rawTitle"), new GUIContent("Title"));
-                EditorGUILayout.PropertyField(stepProp.FindPropertyRelative("rawContent"), new GUIContent("Content"));
-            }
+
 
             EditorGUILayout.Space(4);
 

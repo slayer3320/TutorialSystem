@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Localization;
 
 namespace TutorialSystem
 {
@@ -13,21 +12,6 @@ namespace TutorialSystem
     public class TutorialStep
     {
         public string stepName;
-
-
-        [Tooltip("Localized Title (Used when localization is enabled)")]
-        public LocalizedString localizedTitle;
-        
-        [Tooltip("Raw Title (Used when localization is disabled)")]
-        public string rawTitle;
-        
-        [Tooltip("Localized Content (Used when localization is enabled)")]
-        public LocalizedString localizedContent;
-        
-        [Tooltip("Raw Content (Used when localization is disabled)")]
-        [TextArea(2, 4)]
-        public string rawContent;
-
 
         [SerializeReference]
         public ITutorialTrigger completeTrigger;
@@ -46,28 +30,6 @@ namespace TutorialSystem
         
         [Tooltip("Resume game on exit")]
         public bool resumeOnExit = false;
-
-        // 获取标题（根据全局本地化设置）
-        public string GetTitle()
-        {
-            bool useLocalization = TutorialManager.Instance != null && 
-                TutorialManager.Instance.UseLocalization;
-            
-            if (useLocalization && !localizedTitle.IsEmpty)
-                return localizedTitle.GetLocalizedString();
-            return rawTitle;
-        }
-
-        // 获取内容（根据全局本地化设置）
-        public string GetContent()
-        {
-            bool useLocalization = TutorialManager.Instance != null && 
-                TutorialManager.Instance.UseLocalization;
-            
-            if (useLocalization && !localizedContent.IsEmpty)
-                return localizedContent.GetLocalizedString();
-            return rawContent;
-        }
     }
 
     public class TutorialStepEvents

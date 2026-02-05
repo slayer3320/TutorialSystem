@@ -4,48 +4,35 @@ using UnityEngine;
 namespace TutorialSystem
 {
     /// <summary>
-    /// 箭头方向
-    /// </summary>
-    public enum ArrowDirection
-    {
-        Up,
-        Down,
-        Left,
-        Right,
-        TopLeft,
-        TopRight,
-        BottomLeft,
-        BottomRight
-    }
-
-    /// <summary>
-    /// 箭头模块
+    /// Sprite模块 - 用于显示框选UI高亮提示
     /// </summary>
     [Serializable]
-    public class ArrowModule : TutorialModuleBase
+    public class SpriteModule : TutorialModuleBase
     {
-        public override string ModuleName => "Arrow";
+        public override string ModuleName => "Sprite";
 
-        #region Arrow Properties
-
-        [SerializeField]
-        private ArrowDirection direction = ArrowDirection.Down;
+        #region Sprite Properties
 
         [SerializeField]
+        [Tooltip("显示的Sprite图片")]
+        private Sprite sprite;
+
+        [SerializeField]
+        [Tooltip("Sprite颜色")]
         private Color color = Color.white;
 
         [SerializeField]
-        [Tooltip("箭头大小缩放")]
-        private float scale = 1f;
+        [Tooltip("是否保持Sprite原始比例")]
+        private bool preserveAspect = true;
 
         #endregion
 
-        private TutorialArrowUI arrowUI;
+        private TutorialSpriteUI spriteUI;
 
-        public ArrowDirection Direction
+        public Sprite Sprite
         {
-            get => direction;
-            set => direction = value;
+            get => sprite;
+            set => sprite = value;
         }
 
         public Color Color
@@ -54,49 +41,52 @@ namespace TutorialSystem
             set => color = value;
         }
 
-        public float Scale
+        public bool PreserveAspect
         {
-            get => scale;
-            set => scale = value;
+            get => preserveAspect;
+            set => preserveAspect = value;
         }
 
         protected override void OnActivate()
         {
-            arrowUI = TutorialUIPool.GetArrow();
-            if (arrowUI != null)
+            spriteUI = TutorialUIPool.GetSprite();
+            if (spriteUI != null)
             {
                 // 设置Canvas
                 if (targetCanvas != null)
                 {
-                    arrowUI.transform.SetParent(targetCanvas.transform, false);
+                    spriteUI.transform.SetParent(targetCanvas.transform, false);
                 }
 
-                arrowUI.Setup(this, direction, color, scale);
+                // 设置尺寸
+                Vector2 size = sizeType == ModuleSizeType.CustomSize ? customSize : Vector2.zero;
+
+                spriteUI.Setup(this, sprite, color, size, preserveAspect);
 
                 // 初始化并播放所有配置的Effect
-                InitializeAndPlayEffects(arrowUI.RectTransform);
+                InitializeAndPlayEffects(spriteUI.RectTransform);
 
-                arrowUI.Show();
+                spriteUI.Show();
             }
         }
 
         protected override void OnDeactivate()
         {
-            if (arrowUI != null)
+            if (spriteUI != null)
             {
-                arrowUI.Hide();
-                TutorialUIPool.ReturnArrow(arrowUI);
-                arrowUI = null;
+                spriteUI.Hide();
+                TutorialUIPool.ReturnSprite(spriteUI);
+                spriteUI = null;
             }
         }
 
         public override void UpdateModule()
         {
-            if (arrowUI != null && isActive)
+            if (spriteUI != null && isActive)
             {
                 // 先计算目标位置
-                Vector2 targetPos = GetTargetPosition(arrowUI.RectTransform);
-                
+                Vector2 targetPos = GetTargetPosition(spriteUI.RectTransform);
+
                 // 更新Effect的基础位置（如果有FloatingEffect）
                 foreach (var effect in runtimeEffects)
                 {
@@ -107,7 +97,7 @@ namespace TutorialSystem
                 }
 
                 // 应用位置
-                arrowUI.RectTransform.anchoredPosition = targetPos;
+                spriteUI.RectTransform.anchoredPosition = targetPos;
             }
 
             base.UpdateModule();
