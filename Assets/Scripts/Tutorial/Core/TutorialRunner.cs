@@ -23,7 +23,7 @@ namespace TutorialSystem
         public event Action<TutorialPhase> OnPhaseChanged;
         public event Action<TutorialStep> OnStepChanged;
 
-        private void OnEnable()
+        private void Start()
         {
             SubscribeEvents();
             if (autoStartOnEnable)
@@ -64,7 +64,7 @@ namespace TutorialSystem
                 Debug.LogWarning("[TutorialRunner] No config!");
                 return;
             }
-            TutorialManager.Instance?.StartTutorial(config);
+            TutorialManager.Instance.StartTutorial(config);
         }
 
         public void StartTutorial(TutorialConfig newConfig)

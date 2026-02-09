@@ -14,8 +14,8 @@ namespace TutorialSystem
         [SerializeField] private GameObject arrowPrefab;
         [SerializeField] private GameObject popupPrefab;
         [SerializeField] private GameObject spritePrefab;
-        
-        
+
+
         [SerializeField] private Transform uiContainer;
         [SerializeField] private Canvas targetCanvas;
 
@@ -28,6 +28,7 @@ namespace TutorialSystem
         private TutorialContext currentContext;
         private bool isRunning;
         private TutorialConfig currentConfig;
+
 
         public TutorialContext CurrentContext => currentContext;
         public bool IsRunning => isRunning;

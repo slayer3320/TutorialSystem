@@ -11,6 +11,7 @@ namespace TutorialSystem.Editor
     {
         private Vector2 scrollPosition;
         private bool showPhasesFoldout = true;
+        private bool showProgressFoldout = true;
         private int selectedPhaseIndex = -1;
 
         [MenuItem("Window/Tutorial System/Debug Window")]
@@ -86,6 +87,8 @@ namespace TutorialSystem.Editor
             DrawRuntimeStatus(manager);
             EditorGUILayout.Space(10);
             DrawControlButtons(manager);
+            EditorGUILayout.Space(10);
+            DrawProgressSection();
 
             EditorGUILayout.EndVertical();
         }
@@ -171,6 +174,65 @@ namespace TutorialSystem.Editor
             EditorGUILayout.BeginVertical("box");
             GUILayout.Label("Editor Mode", EditorStyles.boldLabel);
             EditorGUILayout.HelpBox("Debug features are available in Play Mode", MessageType.Info);
+            EditorGUILayout.EndVertical();
+        }
+
+        private void DrawProgressSection()
+        {
+            showProgressFoldout = EditorGUILayout.Foldout(showProgressFoldout, "Tutorial Progress (Save Data)", true);
+            if (!showProgressFoldout) return;
+
+            var progressManager = TutorialProgressManager.Instance;
+            if (progressManager == null)
+            {
+                EditorGUILayout.HelpBox("TutorialProgressManager instance not found.\nAdd TutorialProgressManager component to the scene.", MessageType.Warning);
+                return;
+            }
+
+            EditorGUILayout.BeginVertical("box");
+
+            var completedTutorials = progressManager.GetCompletedTutorials();
+            EditorGUILayout.LabelField($"Completed Tutorials: {completedTutorials.Count}", EditorStyles.boldLabel);
+
+            if (completedTutorials.Count > 0)
+            {
+                EditorGUILayout.Space(5);
+                using (new EditorGUI.IndentLevelScope())
+                {
+                    foreach (var tutorialName in completedTutorials)
+                    {
+                        EditorGUILayout.BeginHorizontal();
+                        EditorGUILayout.LabelField($"✓ {tutorialName}", EditorStyles.label);
+                        if (GUILayout.Button("Reset", GUILayout.Width(50)))
+                        {
+                            // 重置单个教程需要重新获取列表并移除
+                            var list = progressManager.GetCompletedTutorials();
+                            list.Remove(tutorialName);
+                            progressManager.SetCompletedTutorials(list);
+                        }
+                        EditorGUILayout.EndHorizontal();
+                    }
+                }
+            }
+            else
+            {
+                EditorGUILayout.LabelField("No tutorials completed yet.", EditorStyles.miniLabel);
+            }
+
+            EditorGUILayout.Space(10);
+
+            // 控制按钮
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("Clear All Progress", GUILayout.Height(25)))
+            {
+                if (EditorUtility.DisplayDialog("Clear Tutorial Progress",
+                    "Are you sure you want to clear all tutorial progress?", "Yes", "No"))
+                {
+                    progressManager.ClearAllProgress();
+                }
+            }
+            EditorGUILayout.EndHorizontal();
+
             EditorGUILayout.EndVertical();
         }
 
