@@ -44,7 +44,11 @@
 Assets/Scripts/Tutorial/
 ├── Core/                      # 核心管理类
 │   ├── TutorialManager.cs     # 单例管理器，控制教程流程
-│   └── TutorialRunner.cs      # MonoBehaviour 组件，启动教程
+│   ├── TutorialRunner.cs      # MonoBehaviour 组件，启动教程
+│   ├── TutorialLogicBase.cs   # 逻辑基类（Manager/Controller共享）
+│   ├── TutorialSequenceController.cs  # 序列控制器
+│   ├── TutorialProgressManager.cs     # 进度管理器
+│   └── TutorialSaveData.cs    # 存档数据结构
 ├── Data/                      # 数据结构
 │   ├── TutorialConfig.cs      # 教程配置（包含多个 Phase）
 │   ├── TutorialPhase.cs       # 阶段配置（包含多个 Step）
@@ -206,10 +210,14 @@ public class CustomModule : TutorialModuleBase
 ## 最近更新
 
 根据 Git 提交历史：
+- ✅ 抽象 LogicBase 基类，统一 Manager/Controller 逻辑
+- ✅ 更新 DebugWindow 调试窗口
+- ✅ 教程进度保存功能（TutorialProgressManager + TutorialSaveData）
+- ✅ 优化 Trigger + Effect 系统
+- ✅ 修复新建 Phase/Step 对象之间共享 Module 引用的问题
 - ✅ Trigger 系统重组和优化
 - ✅ 移除 Highlight 模块，新增 Sprite 模块
 - ✅ 资源整理和代码精简
-- ✅ 移除 Setup 组件
 
 ## 致谢
 
