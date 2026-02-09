@@ -63,7 +63,7 @@ namespace TutorialSystem
 
         protected override void OnUpdate()
         {
-            time += Time.deltaTime * speed;
+            time += Time.unscaledDeltaTime * speed;
             float offset = Mathf.Sin(time) * amplitude;
             target.anchoredPosition = originalPosition + direction.normalized * offset;
         }

@@ -41,6 +41,7 @@ namespace TutorialSystem
 
         private void OnButtonClick()
         {
+            if (!IsActivated) return;
             Trigger();
         }
     }

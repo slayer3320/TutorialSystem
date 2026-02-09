@@ -19,8 +19,15 @@ namespace TutorialSystem
         public event Action OnTriggered;
 
         [SerializeField]
-        [Tooltip("触发后的延迟时间（秒），0表示立即触发")]
+        [Tooltip("激活延迟（秒）：步骤开始后，等待这段时间才开始监听触发条件，用于防止用户过早触发")]
+        protected float activationDelay = 0f;
+
+        [SerializeField]
+        [Tooltip("触发后延迟（秒）：触发条件满足后，等待这段时间才真正执行触发动作")]
         protected float delayTime = 0f;
+
+        private bool isActivated;
+        private float activationElapsedTime;
 
         private bool isWaitingForDelay;
         private float delayElapsedTime;
@@ -29,6 +36,8 @@ namespace TutorialSystem
         {
             this.context = context;
             isTriggered = false;
+            isActivated = false;
+            activationElapsedTime = 0f;
             isWaitingForDelay = false;
             delayElapsedTime = 0f;
         }
@@ -36,6 +45,8 @@ namespace TutorialSystem
         public virtual void Enable()
         {
             isTriggered = false;
+            isActivated = activationDelay <= 0f;
+            activationElapsedTime = 0f;
             isWaitingForDelay = false;
             delayElapsedTime = 0f;
         }
@@ -47,12 +58,26 @@ namespace TutorialSystem
         public virtual void Reset()
         {
             isTriggered = false;
+            isActivated = false;
+            activationElapsedTime = 0f;
             isWaitingForDelay = false;
             delayElapsedTime = 0f;
         }
 
         public virtual void Update()
         {
+            // 处理激活延迟
+            if (!isActivated)
+            {
+                activationElapsedTime += Time.deltaTime;
+                if (activationElapsedTime >= activationDelay)
+                {
+                    isActivated = true;
+                }
+                return;
+            }
+
+            // 处理触发后延迟
             if (isWaitingForDelay)
             {
                 delayElapsedTime += Time.deltaTime;
@@ -62,6 +87,11 @@ namespace TutorialSystem
                 }
             }
         }
+
+        /// <summary>
+        /// 检查触发器是否已激活（激活延迟已过）
+        /// </summary>
+        protected bool IsActivated => isActivated;
 
         /// <summary>
         /// 开始触发流程（会考虑延迟时间）

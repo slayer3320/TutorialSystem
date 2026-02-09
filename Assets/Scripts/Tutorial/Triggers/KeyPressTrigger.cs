@@ -25,7 +25,7 @@ namespace TutorialSystem
         {
             base.Update();
 
-            if (isTriggered) return;
+            if (!IsActivated || isTriggered) return;
 
             if (anyKey)
             {

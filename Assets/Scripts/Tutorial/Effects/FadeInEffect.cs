@@ -61,7 +61,7 @@ namespace TutorialSystem
         {
             if (canvasGroup == null) return;
 
-            time += Time.deltaTime;
+            time += Time.unscaledDeltaTime;
             float progress = Mathf.Clamp01(time / duration);
             canvasGroup.alpha = Mathf.Lerp(startAlpha, endAlpha, progress);
 

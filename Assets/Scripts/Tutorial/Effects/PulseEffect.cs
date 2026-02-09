@@ -79,7 +79,7 @@ namespace TutorialSystem
 
         protected override void OnUpdate()
         {
-            time += Time.deltaTime * speed;
+            time += Time.unscaledDeltaTime * speed;
 
             // 缩放动画
             float scale = 1f + Mathf.Sin(time) * scaleAmplitude;
