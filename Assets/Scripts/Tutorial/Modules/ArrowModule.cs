@@ -92,11 +92,11 @@ namespace TutorialSystem
 
         public override void UpdateModule()
         {
-            if (arrowUI != null && isActive)
+            if (arrowUI != null && isActive && !isDeactivating)
             {
                 // 先计算目标位置
                 Vector2 targetPos = GetTargetPosition(arrowUI.RectTransform);
-                
+
                 // 更新Effect的基础位置（如果有FloatingEffect）
                 foreach (var effect in runtimeEffects)
                 {
@@ -111,6 +111,12 @@ namespace TutorialSystem
             }
 
             base.UpdateModule();
+        }
+
+        protected override RectTransform GetEffectTargetRectTransform()
+        {
+            if (arrowUI == null) return null;
+            return arrowUI.RectTransform;
         }
 
         /// <summary>

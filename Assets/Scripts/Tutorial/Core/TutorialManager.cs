@@ -28,6 +28,7 @@ namespace TutorialSystem
         private TutorialContext currentContext;
         private bool isRunning;
         private TutorialConfig currentConfig;
+        private readonly List<ITutorialModule> deactivatingModules = new List<ITutorialModule>();
 
 
         public TutorialContext CurrentContext => currentContext;
@@ -64,6 +65,22 @@ namespace TutorialSystem
 
         private void Update()
         {
+            for (int i = deactivatingModules.Count - 1; i >= 0; i--)
+            {
+                var module = deactivatingModules[i];
+                if (module == null)
+                {
+                    deactivatingModules.RemoveAt(i);
+                    continue;
+                }
+
+                module.UpdateModule();
+                if (!module.IsDeactivating)
+                {
+                    deactivatingModules.RemoveAt(i);
+                }
+            }
+
             if (!isRunning || currentContext == null) return;
 
             currentContext.CurrentStep?.completeTrigger?.Update();
@@ -73,7 +90,12 @@ namespace TutorialSystem
             if (currentContext.CurrentStep?.modules != null)
             {
                 foreach (var module in currentContext.CurrentStep.modules)
-                    module?.UpdateModule();
+                {
+                    if (module != null)
+                    {
+                        module.UpdateModule();
+                    }
+                }
             }
         }
 
@@ -117,6 +139,7 @@ namespace TutorialSystem
 
             ExitCurrentStep();
             ExitCurrentPhase();
+            ForceFinalizeDeactivatingModules();
 
             isRunning = false;
             currentContext?.Reset();
@@ -311,7 +334,16 @@ namespace TutorialSystem
             if (step.modules != null)
             {
                 foreach (var module in step.modules)
-                    module?.Deactivate();
+                {
+                    if (module != null)
+                    {
+                        module.Deactivate();
+                        if (module.IsDeactivating && !deactivatingModules.Contains(module))
+                        {
+                            deactivatingModules.Add(module);
+                        }
+                    }
+                }
             }
 
             if (step.resumeOnExit)
@@ -359,6 +391,19 @@ namespace TutorialSystem
             currentContext?.Reset();
             currentContext = null;
             currentConfig = null;
+        }
+
+        private void ForceFinalizeDeactivatingModules()
+        {
+            for (int i = deactivatingModules.Count - 1; i >= 0; i--)
+            {
+                var module = deactivatingModules[i];
+                if (module != null)
+                {
+                    module.ForceDeactivateImmediate();
+                }
+            }
+            deactivatingModules.Clear();
         }
 
         private void Log(string message)

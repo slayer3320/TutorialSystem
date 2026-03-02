@@ -12,7 +12,7 @@ namespace TutorialSystem
     {
         [SerializeField] private RectTransform rectTransform;
         [SerializeField] private CanvasGroup canvasGroup;
-        
+
         // 暴露CanvasGroup供Effect使用
         public CanvasGroup CanvasGroup => canvasGroup;
 
@@ -72,7 +72,7 @@ namespace TutorialSystem
             {
                 buttonContainer.gameObject.SetActive(showButton);
             }
-            
+
             if (confirmButton != null)
             {
                 confirmButton.gameObject.SetActive(showButton);
@@ -94,6 +94,7 @@ namespace TutorialSystem
         public void Show()
         {
             gameObject.SetActive(true);
+            //GetComponent<VerticalLayoutGroup>().SetLayoutVertical();
             if (canvasGroup != null)
             {
                 canvasGroup.alpha = 1f;

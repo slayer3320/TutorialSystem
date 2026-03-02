@@ -130,10 +130,16 @@ namespace TutorialSystem
         protected bool isActive;
         public bool IsActive => isActive;
 
+        protected bool isDeactivating;
+        public bool IsDeactivating => isDeactivating;
+
         protected TutorialContext context;
 
         // 运行时Effect列表
         protected List<IEffect> runtimeEffects = new List<IEffect>();
+
+        // 运行时退场Effect列表
+        protected List<IEffect> runtimeExitEffects = new List<IEffect>();
 
         #region Properties Accessors
 
@@ -186,17 +192,21 @@ namespace TutorialSystem
         public virtual void Activate()
         {
             isActive = true;
+            isDeactivating = false;
             OnActivate();
         }
 
         public virtual void Deactivate()
         {
-            isActive = false;
+            if (!isActive || isDeactivating) return;
 
-            // 停止所有Effect
-            StopAllEffects();
+            isDeactivating = true;
+            StartExitEffects();
 
-            OnDeactivate();
+            if (runtimeExitEffects.Count == 0)
+            {
+                FinalizeDeactivate();
+            }
         }
 
         public virtual void UpdateModule()
@@ -204,8 +214,38 @@ namespace TutorialSystem
             // 更新所有Effect
             foreach (var effect in runtimeEffects)
             {
-                effect?.Update();
+                if (effect != null)
+                {
+                    effect.Update();
+                }
             }
+
+            if (isDeactivating)
+            {
+                bool hasPlayingExitEffect = false;
+                foreach (var effect in runtimeExitEffects)
+                {
+                    if (effect != null)
+                    {
+                        effect.Update();
+                        if (effect.IsPlaying)
+                        {
+                            hasPlayingExitEffect = true;
+                        }
+                    }
+                }
+
+                if (!hasPlayingExitEffect)
+                {
+                    FinalizeDeactivate();
+                }
+            }
+        }
+
+        public void ForceDeactivateImmediate()
+        {
+            if (!isActive && !isDeactivating) return;
+            FinalizeDeactivate();
         }
 
         /// <summary>
@@ -218,11 +258,53 @@ namespace TutorialSystem
         }
 
         /// <summary>
+        /// 启动退场Effect
+        /// </summary>
+        protected void StartExitEffects()
+        {
+            RectTransform effectTarget = GetEffectTargetRectTransform();
+            if (effectTarget == null)
+            {
+                runtimeExitEffects.Clear();
+                return;
+            }
+
+            effectSettings.InitializeAndPlayExit(effectTarget, runtimeExitEffects);
+        }
+
+        /// <summary>
+        /// 获取Effect作用目标
+        /// </summary>
+        protected abstract RectTransform GetEffectTargetRectTransform();
+
+        /// <summary>
         /// 停止所有Effect
         /// </summary>
         protected void StopAllEffects()
         {
             effectSettings.StopAll(runtimeEffects);
+        }
+
+        /// <summary>
+        /// 停止所有退场Effect
+        /// </summary>
+        protected void StopAllExitEffects()
+        {
+            effectSettings.StopAll(runtimeExitEffects);
+        }
+
+        /// <summary>
+        /// 完成停用
+        /// </summary>
+        protected void FinalizeDeactivate()
+        {
+            isActive = false;
+            isDeactivating = false;
+
+            StopAllEffects();
+            StopAllExitEffects();
+
+            OnDeactivate();
         }
 
         /// <summary>

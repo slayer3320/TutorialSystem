@@ -82,7 +82,7 @@ namespace TutorialSystem
 
         public override void UpdateModule()
         {
-            if (spriteUI != null && isActive)
+            if (spriteUI != null && isActive && !isDeactivating)
             {
                 // 先计算目标位置
                 Vector2 targetPos = GetTargetPosition(spriteUI.RectTransform);
@@ -101,6 +101,12 @@ namespace TutorialSystem
             }
 
             base.UpdateModule();
+        }
+
+        protected override RectTransform GetEffectTargetRectTransform()
+        {
+            if (spriteUI == null) return null;
+            return spriteUI.RectTransform;
         }
 
         /// <summary>

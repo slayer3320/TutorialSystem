@@ -127,6 +127,12 @@ namespace TutorialSystem
             OnButtonClicked?.Invoke();
         }
 
+        protected override RectTransform GetEffectTargetRectTransform()
+        {
+            if (popupUI == null) return null;
+            return popupUI.GetComponent<RectTransform>();
+        }
+
         /// <summary>
         /// 将基类的PlacementType转换为PopupPosition
         /// </summary>

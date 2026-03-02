@@ -17,7 +17,8 @@ namespace TutorialSystem.Editor
         {
             new EffectInfo("floatingEnabled", "floatingEffect", "Floating", "浮动效果"),
             new EffectInfo("fadeInEnabled", "fadeInEffect", "Fade In", "渐入效果"),
-            new EffectInfo("pulseEnabled", "pulseEffect", "Pulse", "脉冲效果")
+            new EffectInfo("pulseEnabled", "pulseEffect", "Pulse", "脉冲效果"),
+            new EffectInfo("fadeOutEnabled", "fadeOutEffect", "Fade Out", "渐出效果")
         };
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)

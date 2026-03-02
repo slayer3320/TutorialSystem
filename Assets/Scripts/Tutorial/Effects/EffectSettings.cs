@@ -19,6 +19,9 @@ namespace TutorialSystem
         [SerializeField] private bool pulseEnabled;
         [SerializeField] private PulseEffect pulseEffect = new PulseEffect();
 
+        [SerializeField] private bool fadeOutEnabled;
+        [SerializeField] private FadeOutEffect fadeOutEffect = new FadeOutEffect();
+
         public bool FloatingEnabled
         {
             get => floatingEnabled;
@@ -43,6 +46,14 @@ namespace TutorialSystem
 
         public PulseEffect PulseEffect => pulseEffect;
 
+        public bool FadeOutEnabled
+        {
+            get => fadeOutEnabled;
+            set => fadeOutEnabled = value;
+        }
+
+        public FadeOutEffect FadeOutEffect => fadeOutEffect;
+
         /// <summary>
         /// 获取启用的Effect数量
         /// </summary>
@@ -54,6 +65,7 @@ namespace TutorialSystem
                 if (floatingEnabled) count++;
                 if (fadeInEnabled) count++;
                 if (pulseEnabled) count++;
+                if (fadeOutEnabled) count++;
                 return count;
             }
         }
@@ -68,14 +80,34 @@ namespace TutorialSystem
             if (pulseEnabled) yield return pulseEffect;
         }
 
+        public IEnumerable<IEffect> GetEnabledExitEffects()
+        {
+            if (fadeOutEnabled) yield return fadeOutEffect;
+        }
+
         /// <summary>
-        /// 初始化并播放所有启用的Effect
+        /// 初始化并播放所有启用的入场Effect
         /// </summary>
         public void InitializeAndPlay(RectTransform target, List<IEffect> runtimeList)
         {
             runtimeList.Clear();
-            
+
             foreach (var effect in GetEnabledEffects())
+            {
+                effect.Initialize(target);
+                effect.Play();
+                runtimeList.Add(effect);
+            }
+        }
+
+        /// <summary>
+        /// 初始化并播放所有启用的退场Effect
+        /// </summary>
+        public void InitializeAndPlayExit(RectTransform target, List<IEffect> runtimeList)
+        {
+            runtimeList.Clear();
+
+            foreach (var effect in GetEnabledExitEffects())
             {
                 effect.Initialize(target);
                 effect.Play();

@@ -19,6 +19,11 @@ namespace TutorialSystem
         bool IsActive { get; }
 
         /// <summary>
+        /// 是否正在退场
+        /// </summary>
+        bool IsDeactivating { get; }
+
+        /// <summary>
         /// 初始化模块
         /// </summary>
         void Initialize(TutorialContext context);
@@ -37,5 +42,10 @@ namespace TutorialSystem
         /// 每帧更新
         /// </summary>
         void UpdateModule();
+
+        /// <summary>
+        /// 立即停用（跳过退场效果）
+        /// </summary>
+        void ForceDeactivateImmediate();
     }
 }
