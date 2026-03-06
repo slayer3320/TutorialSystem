@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace TutorialSystem
 {
@@ -36,11 +39,44 @@ namespace TutorialSystem
             }
             else
             {
+                if (triggerKey == KeyCode.Mouse0 && IsPointerOverButton())
+                {
+                    return;
+                }
+
                 if (Input.GetKeyDown(triggerKey))
                 {
                     Trigger();
                 }
             }
+        }
+
+        private bool IsPointerOverButton()
+        {
+            EventSystem eventSystem = EventSystem.current;
+            if (eventSystem == null)
+            {
+                return false;
+            }
+
+            PointerEventData pointerData = new PointerEventData(eventSystem)
+            {
+                position = Input.mousePosition
+            };
+
+            List<RaycastResult> results = new List<RaycastResult>();
+            eventSystem.RaycastAll(pointerData, results);
+
+            for (int i = 0; i < results.Count; i++)
+            {
+                GameObject hitObject = results[i].gameObject;
+                if (hitObject != null && hitObject.GetComponentInParent<Button>() != null)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
